@@ -1,0 +1,55 @@
+[{
+    "question": "What is the capital of Canada?",
+    "choices": [
+        "São Paulo", "Madrid", "Ottawa", "Cairo"
+    ],
+    "correctAnswer": 2,
+    "wrongAnswers": [0, 1, 3]
+},
+{
+    "question": "What is the capital of Sweeden?",
+    "choices": [
+        "Tokyio", "Estocolmo", "Moscow", "Havana"
+    ],
+    "correctAnswer": 1,
+    "wrongAnswers": [0, 2, 3]
+},
+{
+    "question": "What is the capital of Germany?",
+    "choices": [
+        "Berlim", "Paris", "Lyon", "Montevidéu"
+    ],
+    "correctAnswer": 0,
+    "wrongAnswers": [1, 2, 3]
+},
+{
+    "question": "What is the capital of Argentina?",
+    "choices": [
+        "Munique",
+        "Kiev",
+        "New York",
+        "Bueno Aires"
+    ],
+    "correctAnswer": 3,
+    "wrongAnswers": [
+        0,
+        1,
+        2
+    ]
+},
+{
+    "question": "What is the capital of Norway?",
+    "choices": [
+        "Beijing",
+        "Oslo",
+        "Sidney",
+        "Seattle"
+    ],
+    "correctAnswer": 1,
+    "wrongAnswers": [
+        0,
+        2,
+        3
+    ]
+}
+]

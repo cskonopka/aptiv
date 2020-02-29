@@ -8,6 +8,7 @@ var questionsHit = 0,
 var questionsCorrect = [];
 var whichquestion = [];
 var whichwrong = [];
+var globalJSON = [];
 
 // var imported = document.createElement('script');
 // imported.src = '/path/to/imported/script';
@@ -70,9 +71,10 @@ var questions = [
 
 
 
-
+var counter = 0;
 // Creating question Structure...
 var createQuestionElements = function (currentQuestion) {
+
     var option,
         radio,
         label,
@@ -90,13 +92,26 @@ var createQuestionElements = function (currentQuestion) {
     qcount.innerHTML = currentQuestion.qcount;
     questionHolder.appendChild(qcount);
 
+    console.log(globalJSON)
+
+    globalJSON.forEach((element, index, array) => {
+        console.log(element.x); // 100, 200, 300
+        console.log(index); // 0, 1, 2
+        console.log(array); // same myArray object 3 times
+    });
+
+    // console.log(globalJSON[0].question, counter);
+
+    // for (var i = 0; i < globalJSON.length; i++) {
+    //     console.log(globalJSON[i]);
+    // }
     // qcount.innerHTML = "Question " + questionsNumber + " of 5" + " - " + "Score: " + questionsHit * 20 + "%";
-    qcount.innerHTML = '<div class="container-fluid"><div class="row align-items-center""><div class="col">' + "Question " + questionsNumber + " of 5" + " - " + "Score: " + questionsHit * 20 + "%" + '</div></div></div>';
+    qcount.innerHTML = '<div class="container-fluid"><div class="row align-items-center""><div class="col">' + "Question " + questionsNumber + " of " + " - " + "Score: " + questionsHit * 20 + "%" + '</div></div></div>';
     question.innerHTML = '<div class="container-fluid"><div class="row align-items-center""><div class="col">' + currentQuestion.question + '</div></div></div>';
     // question.innerHTML = currentQuestion.question;
     questionHolder.appendChild(question);
 
-
+    counter += 1;
     // diver = document.createElement('div');
     // diver.innerHTML = '<div class="container-fluid"><div class="row align-items-center">';
 
@@ -124,6 +139,8 @@ var createQuestionElements = function (currentQuestion) {
         btn = document.createElement('a');
 
         option.classList.add('col-md-3');
+        option.classList.add('d-flex');
+        option.classList.add('justify-content-center');
 
 
         radio.type = 'radio';
@@ -139,6 +156,10 @@ var createQuestionElements = function (currentQuestion) {
     }
     diverA.appendChild(diver2);
     questionHolder.appendChild(diverA);
+    tester = document.createElement('div');
+
+
+    questionHolder.appendChild(tester)
 
 
     // var ender = document.createElement('div');
@@ -163,6 +184,62 @@ var createQuestionElements = function (currentQuestion) {
 }
 var jester = new Object;
 var element = [];
+
+
+
+function clickDL() {
+    const date = new Date().toLocaleString();
+    var stringit = JSON.stringify(element);
+    let filename = date + ".json"
+    console.log(stringit);
+    console.log(filename);
+    // download(stringit, filename, "text/plain");
+
+    var a = document.createElement("a");
+    var file = new Blob([stringit], { type: "text/plain" });
+    a.href = URL.createObjectURL(file);
+    a.download = filename;
+    a.click();
+}
+
+function download(content, fileName, contentType) {
+    var a = document.createElement("a");
+    var file = new Blob([content], { type: contentType });
+    a.href = URL.createObjectURL(file);
+    a.download = fileName;
+    a.click();
+}
+
+
+function readJSON(path) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', path, true);
+    xhr.responseType = 'blob';
+    xhr.onload = function (e) {
+        if (this.status == 200) {
+            var file = new File([this.response], 'temp');
+            var fileReader = new FileReader();
+            fileReader.addEventListener('load', function () {
+                //   console.log(fileReader.result);
+                json = JSON.parse(fileReader.result);
+                console.log(json);
+                globalJSON.push(json);
+                //do stuff with fileReader.result
+            });
+            fileReader.readAsText(file);
+        }
+    }
+    xhr.send();
+}
+
+// btnDL.addEventListener('click', function () {
+//     console.log('download')
+//     // readJSON("js/answer.json")
+//     clickDL();
+//     // quiz.innerHTML = '';
+//     // showScore();
+// });
+
 
 var checkAnswer = function (option, currentQuestion) {
     var cur;
@@ -233,6 +310,7 @@ var validateAnswer = function (currentQuestion) {
     if (inputCounter > 0) {
         document.querySelector('.question-alert').style.display = 'none';
         var option = document.querySelector('input:checked').parentNode;
+
         checkAnswer(option, currentQuestion);
     } else {
         document.querySelector('.question-alert').style.display = 'block';
@@ -246,10 +324,14 @@ var showScore = function () {
     firstHeading.innerHTML = 'Congratulations for finish the Quiz!!!';
 
     var secondHeading = document.createElement('h3');
-    secondHeading.innerHTML = 'Your score is ' + questionsHit + ' out of ' + questionsNumber;
+    secondHeading.innerHTML = 'Your score is ' + questionsHit + ' out of ' + ((questionsNumber-1==NaN) ? '0' : questionsNumber-1) 
+
+    var downloadButton = document.createElement('button');
+    downloadButton.innerHTML = '<button class="btn" onclick="clickDL()">download results</button>';
 
     quiz.appendChild(firstHeading);
-    quiz.appendChild(secondHeading)
+    quiz.appendChild(secondHeading);
+    quiz.appendChild(downloadButton);
 
     // var data = document.createElement('p');
     // var i = 0;
@@ -272,7 +354,6 @@ var showScore = function () {
         diver2.classList.add("align-items-center");
 
 
-
         for (var i = 0; i < element[key].choices.length; i++) {
 
             option = document.createElement('div');
@@ -286,7 +367,7 @@ var showScore = function () {
                 console.log("WRONG --> " + element[key].choices[i]);
             }
 
-        // label.innerHTML = '<div class="container-fluid"><div class="row align-items-center"><div class="col-sm-3">' + currentQuestion.choices[i] + '</div></div></div>';;
+            // label.innerHTML = '<div class="container-fluid"><div class="row align-items-center"><div class="col-sm-3">' + currentQuestion.choices[i] + '</div></div></div>';;
             diver2.appendChild(option);
         }
         quiz.appendChild(newdiv);
@@ -343,23 +424,10 @@ var getQuestion = function () {
 //     document.getElementById("text").innerHTML = html;
 // });
 
-function loadJSON(callback) {
-    var xobj = new XMLHttpRequest();
-    xobj.overrideMimeType("application/json");
-    xobj.open('GET', '/Users/csk/Desktop/aptiv/legend.json', true);
-    xobj.onreadystatechange = function () {
-        if (xobj.readyState == 4 && xobj.status == "200") {
-            console.log(xobj.responseText);
-            callback(xobj.responseText);
-        }
-    };
-    xobj.send(null);
-}
-
 
 btnStart.addEventListener('click', function () {
-    console.log('asf')
-
+    console.log('asf');
+    readJSON("js/leg.json");
     quiz.innerHTML = '';
     getQuestion();
 });
