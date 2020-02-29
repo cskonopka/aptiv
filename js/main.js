@@ -91,13 +91,13 @@ var createQuestionElements = function (currentQuestion) {
         btn;
 
     var questionHolder = document.createElement('div');
-    var question = document.createElement('p');
-    var qcount = document.createElement('p');
+    // var question = document.createElement('p');
+    // var qcount = document.createElement('p');
     // var qscore = document.createElement('p');
 
     // questionHolder.classList.add('question');
     // questionHolder.classList.add('qcount');
-    questionHolder.classList.add('qscore');
+    // questionHolder.classList.add('qscore');
 
     // qcount.innerHTML = currentQuestion.qcount;
     // questionHolder.appendChild(qcount);
@@ -140,37 +140,7 @@ var createQuestionElements = function (currentQuestion) {
     // qQ1.appendChild(qQ2);
     questionHolder.appendChild(qQ2);
 
-
-
-    // console.log(globalJSON.legend[0].question);
-
-    // console.log(globalJSON[0].question, counter);
-
-    // for (var i = 0; i < globalJSON.length; i++) {
-    //     console.log(globalJSON[i]);
-    // }
-    // qcount.innerHTML = "Question " + questionsNumber + " of 5" + " - " + "Score: " + questionsHit * 20 + "%";
-    // qcount.innerHTML = '<div class="container-fluid"><div class="row align-items-center""><div class="col">' + "Question " + questionsNumber + " of " + " 5 " + "Score: " + questionsHit * 20 + "%" + '</div></div></div>';
-    // question.innerHTML = '<div class="container-fluid"><div class="row align-items-center""><div class="col">' + currentQuestion.question + '</div></div></div>';
-    // question.innerHTML = currentQuestion.question;
-    // questionHolder.appendChild(question);
-
-
-
-
-
     counter += 1;
-    // diver = document.createElement('div');
-    // diver.innerHTML = '<div class="container-fluid"><div class="row align-items-center">';
-
-
-    // for (var i2 = 0; i2 < 4; i2++) {
-    //     option = document.createElement('div');
-    //     option.innerHTML = '<div class="col-sm-3">' + currentQuestion.choices[i2] + '</div>';
-    //     console.log(currentQuestion.choices[i2])
-    // }
-    // diverA = document.createElement('div');
-    // diverA.classList.add("container-fluid");
 
     diver2 = document.createElement('div');
     diver2.classList.add("row");
@@ -189,44 +159,46 @@ var createQuestionElements = function (currentQuestion) {
         label = document.createElement('label');
         btn = document.createElement('a');
 
-
-
-
         radio.type = 'radio';
         radio.name = 'choice';
-
 
         option.appendChild(radio);
         option.appendChild(label);
 
         label.innerHTML = currentQuestion.choices[i];
-        // label.innerHTML = '<div class="container-fluid"><div class="row align-items-center"><div class="col-sm-3">' + currentQuestion.choices[i] + '</div></div></div>';;
         diver2.appendChild(option);
     }
-    // diverA.appendChild(diver2);
     questionHolder.appendChild(diver2);
-    tester = document.createElement('div');
+    // tester = document.createElement('div');
 
 
-    questionHolder.appendChild(tester)
+    // questionHolder.appendChild(tester)
 
 
     // var ender = document.createElement('div');
     // ender.innerHTML = '</div></div>';
     // questionHolder.appendChild(ender);
 
-    quiz.appendChild(questionHolder);
+    
 
     // btn.classList.add('btn');
     // btn.classList.add('btn-small');
     // btn.innerHTML = 'Submit';
-    btn.innerHTML = '<div class="container-fluid"><div class="row align-items-center""><div class="col"><button type="button"class="btn" >Submit</button></div></div></div>'
+    var btn = document.createElement("button")
+    btn.classList.add('btn');
+    btn.classList.add('btn-small');
+    btn.innerHTML = 'Submit';
+
+    // btn.innerHTML = '<div class="container-fluid"><div class="row align-items-center""><div class="col"><button type="button"class="btn" >Submit</button></div></div></div>'
+    // btn.innerHTML = '<div class="container-fluid"><div class="row align-items-center""><div class="col"><button type="button"class="btn" >Submit</button></div></div></div>'
 
     btn.addEventListener('click', function () {
         validateAnswer(currentQuestion);
     });
 
-    quiz.appendChild(btn);
+    questionHolder.appendChild(btn);
+    quiz.appendChild(questionHolder);
+
 
 
 
