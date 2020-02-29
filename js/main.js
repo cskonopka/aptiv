@@ -9,6 +9,21 @@ var questionsCorrect = [];
 var whichquestion = [];
 var whichwrong = [];
 
+// var imported = document.createElement('script');
+// imported.src = '/path/to/imported/script';
+// document.head.appendChild(imported);
+
+// fetch('https://jsonplaceholder.typicode.com/posts').then(function (response) {
+// 	// The API call was successful!
+// 	return response.json();
+// }).then(function (data) {
+// 	// This is the JSON from our response
+// 	console.log(data);
+// }).catch(function (err) {
+// 	// There was an error
+// 	console.warn('Something went wrong.', err);
+// });
+
 // Array of Questions...
 var questions = [
     {
@@ -52,73 +67,96 @@ var questions = [
     },
 ];
 
+
+
+
+
 // Creating question Structure...
 var createQuestionElements = function (currentQuestion) {
-	
-	
-
-
     var option,
         radio,
         label,
         btn;
 
-
-
     var questionHolder = document.createElement('div');
     var question = document.createElement('p');
     var qcount = document.createElement('p');
-    var qscore = document.createElement('p');
+    // var qscore = document.createElement('p');
 
     questionHolder.classList.add('question');
     questionHolder.classList.add('qcount');
-	questionHolder.classList.add('qscore');
-	
-	
+    questionHolder.classList.add('qscore');
 
     qcount.innerHTML = currentQuestion.qcount;
     questionHolder.appendChild(qcount);
+
     // qcount.innerHTML = "Question " + questionsNumber + " of 5" + " - " + "Score: " + questionsHit * 20 + "%";
-	qcount.innerHTML = '<div class="container-fluid"><div class="row align-items-center""><div class="col">' + "Question " + questionsNumber + " of 5" + " - " + "Score: " + questionsHit * 20 + "%" +'</div></div></div>';
-	question.innerHTML = '<div class="container-fluid"><div class="row align-items-center""><div class="col">' + currentQuestion.question + '</div></div></div>';
-	// question.innerHTML = currentQuestion.question;
+    qcount.innerHTML = '<div class="container-fluid"><div class="row align-items-center""><div class="col">' + "Question " + questionsNumber + " of 5" + " - " + "Score: " + questionsHit * 20 + "%" + '</div></div></div>';
+    question.innerHTML = '<div class="container-fluid"><div class="row align-items-center""><div class="col">' + currentQuestion.question + '</div></div></div>';
+    // question.innerHTML = currentQuestion.question;
     questionHolder.appendChild(question);
 
-    for (var i = 0; i < 4; i++) {
-		option = document.createElement('div');
-		
-		option.innerHTML = '<div class="container-fluid"><div class="row align-items-center""><div class="col">' + "fasdf" + '</div></div></div>';
 
+    // diver = document.createElement('div');
+    // diver.innerHTML = '<div class="container-fluid"><div class="row align-items-center">';
+
+
+    // for (var i2 = 0; i2 < 4; i2++) {
+    //     option = document.createElement('div');
+    //     option.innerHTML = '<div class="col-sm-3">' + currentQuestion.choices[i2] + '</div>';
+    //     console.log(currentQuestion.choices[i2])
+    // }
+    diverA = document.createElement('div');
+    diverA.classList.add("container-fluid");
+
+    diver2 = document.createElement('div');
+    diver2.classList.add("row");
+    diver2.classList.add("align-items-center");
+    // diver2.innerHTML = '</div></div>';
+    // questionHolder.appendChild(diver2);
+
+    for (var i = 0; i < 4; i++) {
+        option = document.createElement('div');
+        // option.innerHTML = '<div class="col-sm-3">';
 
         radio = document.createElement('input');
         label = document.createElement('label');
         btn = document.createElement('a');
 
-        option.classList.add('option');
+        option.classList.add('col-md-3');
+
 
         radio.type = 'radio';
         radio.name = 'choice';
 
-        option.appendChild(radio);
-		option.appendChild(label);
-		
-        label.innerHTML = currentQuestion.choices[i];
 
-        questionHolder.appendChild(option);
+        option.appendChild(radio);
+        option.appendChild(label);
+
+        label.innerHTML = currentQuestion.choices[i];
+        // label.innerHTML = '<div class="container-fluid"><div class="row align-items-center"><div class="col-sm-3">' + currentQuestion.choices[i] + '</div></div></div>';;
+        diver2.appendChild(option);
     }
+    diverA.appendChild(diver2);
+    questionHolder.appendChild(diverA);
+
+
+    // var ender = document.createElement('div');
+    // ender.innerHTML = '</div></div>';
+    // questionHolder.appendChild(ender);
 
     quiz.appendChild(questionHolder);
 
     // btn.classList.add('btn');
     // btn.classList.add('btn-small');
-	// btn.innerHTML = 'Submit';
-	btn.innerHTML = '<div class="container-fluid"><div class="row align-items-center""><div class="col"><button type="button"class="btn" >Submit</button></div></div></div>'
+    // btn.innerHTML = 'Submit';
+    btn.innerHTML = '<div class="container-fluid"><div class="row align-items-center""><div class="col"><button type="button"class="btn" >Submit</button></div></div></div>'
 
     btn.addEventListener('click', function () {
         validateAnswer(currentQuestion);
     });
 
-	quiz.appendChild(btn);
+    quiz.appendChild(btn);
 
 
 
@@ -133,10 +171,11 @@ var checkAnswer = function (option, currentQuestion) {
         whichquestion = whichquestion.concat(currentQuestion.question);
         jester = {
             q: currentQuestion.question,
-            choice: option.lastElementChild.innerHTML,
+            selected: option.lastElementChild.innerHTML,
+            choices: currentQuestion.choices,
             answer: currentQuestion.choices[currentQuestion.correctAnswer],
-			state: true,
-			answers: currentQuestion.wrongAnswers
+            state: true,
+            answers: currentQuestion.wrongAnswers
         };
         element.push(jester);
         console.log(option.lastElementChild.innerHTML);
@@ -146,10 +185,11 @@ var checkAnswer = function (option, currentQuestion) {
         console.log(option.lastElementChild.innerHTML);
         jester = {
             q: currentQuestion.question,
-            choice: option.lastElementChild.innerHTML,
+            selected: option.lastElementChild.innerHTML,
+            choices: currentQuestion.choices,
             answer: currentQuestion.choices[currentQuestion.correctAnswer],
-			state: false,
-			answers: currentQuestion.wrongAnswers
+            state: false,
+            answers: currentQuestion.wrongAnswers
         };
         element.push(jester);
     }
@@ -180,7 +220,10 @@ var checkAnswer = function (option, currentQuestion) {
 };
 
 var validateAnswer = function (currentQuestion) {
-    var input = document.querySelectorAll('.option input');
+    console.log("clicked");
+    var input = document.querySelectorAll('input');
+    // var input = document.querySelectorAll('.option input');
+
     var inputCounter = 0;
     for (var i = 0; i < input.length; i++) {
         if (input[i].checked) {
@@ -212,13 +255,44 @@ var showScore = function () {
     // var i = 0;
     // var text = ["text1", "tex2", "text3", "text4"];
     for (var key in element) {
-		console.log(element[key].q);
-		var newdiv = document.createElement('div');
-		var collapse = "collapse"+key;
-		newdiv.innerHTML = '<div class="accordion" id="accordionExample"><div class="card"><div class="card-header" id="headingOne">' +
-		  '<h2 class="mb-0"><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#' + collapse + '" aria-expanded="false" aria-controls="' + collapse + '">' + element[key].q +'</button></h2></div>'+
-			'<div id="' + collapse + '" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample"><div class="card-body">' + element[key].state + '</div></div></div>'
-		  quiz.appendChild(newdiv);
+        var newdiv = document.createElement('div');
+        var collapse = "collapse" + key;
+
+        newdiv.innerHTML = '<div class="accordion" id="accordionExample"><div class="card"><div class="card-header" id="headingOne">' +
+            '<h2 class="mb-0"><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#' + collapse + '" aria-expanded="false" aria-controls="' + collapse + '">' + element[key].q + '</button></h2></div>' +
+            '<div id="' + collapse + '" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample"><div class="card-body">'
+
+
+
+        diverA = document.createElement('div');
+        diverA.classList.add("container-fluid");
+
+        diver2 = document.createElement('div');
+        diver2.classList.add("row");
+        diver2.classList.add("align-items-center");
+
+
+
+        for (var i = 0; i < element[key].choices.length; i++) {
+
+            option = document.createElement('div');
+            option.classList.add('col-md-3');
+
+            if (element[key].choices[i] == element[key].answer) {
+                option.innerHTML = element[key].choices[i];
+                console.log("CORRECT --> " + element[key].choices[i]);
+            } else {
+                option.innerHTML = element[key].choices[i];
+                console.log("WRONG --> " + element[key].choices[i]);
+            }
+
+        // label.innerHTML = '<div class="container-fluid"><div class="row align-items-center"><div class="col-sm-3">' + currentQuestion.choices[i] + '</div></div></div>';;
+            diver2.appendChild(option);
+        }
+        quiz.appendChild(newdiv);
+        var ender = document.createElement('div');
+        ender.innerHTM = '</div></div></div>';
+        quiz.appendChild(ender);
 
         // data.innerHTML = element[key].q;
         // var div = document.createElement("div");
@@ -242,8 +316,50 @@ var getQuestion = function () {
     }
 }
 
+
+// function ajax_get(url, callback) {
+//     var xmlhttp = new XMLHttpRequest();
+//     xmlhttp.onreadystatechange = function() {
+//         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+//             console.log('responseText:' + xmlhttp.responseText);
+//             try {
+//                 var data = JSON.parse(xmlhttp.responseText);
+//             } catch(err) {
+//                 console.log(err.message + " in " + xmlhttp.responseText);
+//                 return;
+//             }
+//             callback(data);
+//         }
+//     };
+
+//     xmlhttp.open("GET", url, true);
+//     xmlhttp.send();
+// }
+
+// ajax_get('legend.json', function(data) {
+//     document.getElementById("title").innerHTML = data["title"]; 
+//     var html = "<h2>" + data["question"] + "</h2>";
+//     html += "<h3>" + data["choices"] + "</h3>";
+//     document.getElementById("text").innerHTML = html;
+// });
+
+function loadJSON(callback) {
+    var xobj = new XMLHttpRequest();
+    xobj.overrideMimeType("application/json");
+    xobj.open('GET', '/Users/csk/Desktop/aptiv/legend.json', true);
+    xobj.onreadystatechange = function () {
+        if (xobj.readyState == 4 && xobj.status == "200") {
+            console.log(xobj.responseText);
+            callback(xobj.responseText);
+        }
+    };
+    xobj.send(null);
+}
+
+
 btnStart.addEventListener('click', function () {
     console.log('asf')
+
     quiz.innerHTML = '';
     getQuestion();
 });

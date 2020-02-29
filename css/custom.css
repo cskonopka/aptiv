@@ -1,0 +1,28 @@
+.btn btn-link {
+    display: block;
+    /* width: 100%; */
+    margin: 0 auto 1em auto;
+    padding: 1em 3em;
+    font-weight: 400;
+    cursor: pointer;
+    color: #fff;
+    background:#000000;
+    border-radius: 7px;
+    border: 1px solid #000000;
+    transition: all 0.5s ease-in;
+  }
+  
+  .btn {
+    display: block;
+    width: 50%;
+    /* height: 166%; */
+    margin: 0 auto 1em auto;
+    padding: 1em 3em;
+    font-weight: 400;
+    cursor: pointer;
+    color: #fff;
+    background: #000000;
+    border-radius: 7px;
+    border: 1px solid #f0000000f;
+    transition: all 0.5s ease-in;
+  }
