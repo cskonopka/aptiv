@@ -95,18 +95,18 @@ var createQuestionElements = function (currentQuestion) {
     var qcount = document.createElement('p');
     // var qscore = document.createElement('p');
 
-    questionHolder.classList.add('question');
-    questionHolder.classList.add('qcount');
+    // questionHolder.classList.add('question');
+    // questionHolder.classList.add('qcount');
     questionHolder.classList.add('qscore');
 
-    qcount.innerHTML = currentQuestion.qcount;
-    questionHolder.appendChild(qcount);
+    // qcount.innerHTML = currentQuestion.qcount;
+    // questionHolder.appendChild(qcount);
 
 
 
     // BLOCK --> Score
-    qH1 = document.createElement('div');
-    qH1.classList.add("container-fluid");
+    // qH1 = document.createElement('div');
+    // qH1.classList.add("container-fluid");
 
     qH2 = document.createElement('div');
     qH2.classList.add("row");
@@ -119,14 +119,12 @@ var createQuestionElements = function (currentQuestion) {
     option3.innerHTML = "Question " + questionsNumber + " of " + " 5 " + "Score: " + questionsHit * 20 + "%";
 
     qH2.appendChild(option3);
-    qH1.appendChild(qH2);
-    questionHolder.appendChild(qH1);
-
-
+    // qH1.appendChild(qH2);
+    questionHolder.appendChild(qH2);
 
     // BLOCK --> Question
-    qQ1 = document.createElement('div');
-    qQ1.classList.add("container-fluid");
+    // qQ1 = document.createElement('div');
+    // qQ1.classList.add("container-fluid");
 
     qQ2 = document.createElement('div');
     qQ2.classList.add("row");
@@ -139,8 +137,8 @@ var createQuestionElements = function (currentQuestion) {
     option4.innerHTML = currentQuestion.question;
 
     qQ2.appendChild(option4);
-    qQ1.appendChild(qQ2);
-    questionHolder.appendChild(qQ1);
+    // qQ1.appendChild(qQ2);
+    questionHolder.appendChild(qQ2);
 
 
 
@@ -152,10 +150,10 @@ var createQuestionElements = function (currentQuestion) {
     //     console.log(globalJSON[i]);
     // }
     // qcount.innerHTML = "Question " + questionsNumber + " of 5" + " - " + "Score: " + questionsHit * 20 + "%";
-    qcount.innerHTML = '<div class="container-fluid"><div class="row align-items-center""><div class="col">' + "Question " + questionsNumber + " of " + " 5 " + "Score: " + questionsHit * 20 + "%" + '</div></div></div>';
-    question.innerHTML = '<div class="container-fluid"><div class="row align-items-center""><div class="col">' + currentQuestion.question + '</div></div></div>';
+    // qcount.innerHTML = '<div class="container-fluid"><div class="row align-items-center""><div class="col">' + "Question " + questionsNumber + " of " + " 5 " + "Score: " + questionsHit * 20 + "%" + '</div></div></div>';
+    // question.innerHTML = '<div class="container-fluid"><div class="row align-items-center""><div class="col">' + currentQuestion.question + '</div></div></div>';
     // question.innerHTML = currentQuestion.question;
-    questionHolder.appendChild(question);
+    // questionHolder.appendChild(question);
 
 
 
@@ -171,8 +169,8 @@ var createQuestionElements = function (currentQuestion) {
     //     option.innerHTML = '<div class="col-sm-3">' + currentQuestion.choices[i2] + '</div>';
     //     console.log(currentQuestion.choices[i2])
     // }
-    diverA = document.createElement('div');
-    diverA.classList.add("container-fluid");
+    // diverA = document.createElement('div');
+    // diverA.classList.add("container-fluid");
 
     diver2 = document.createElement('div');
     diver2.classList.add("row");
@@ -205,8 +203,8 @@ var createQuestionElements = function (currentQuestion) {
         // label.innerHTML = '<div class="container-fluid"><div class="row align-items-center"><div class="col-sm-3">' + currentQuestion.choices[i] + '</div></div></div>';;
         diver2.appendChild(option);
     }
-    diverA.appendChild(diver2);
-    questionHolder.appendChild(diverA);
+    // diverA.appendChild(diver2);
+    questionHolder.appendChild(diver2);
     tester = document.createElement('div');
 
 
