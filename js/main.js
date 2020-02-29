@@ -102,6 +102,48 @@ var createQuestionElements = function (currentQuestion) {
     qcount.innerHTML = currentQuestion.qcount;
     questionHolder.appendChild(qcount);
 
+
+
+    // BLOCK --> Score
+    qH1 = document.createElement('div');
+    qH1.classList.add("container-fluid");
+
+    qH2 = document.createElement('div');
+    qH2.classList.add("row");
+    qH2.classList.add("align-items-center");
+
+    option3 = document.createElement('div');
+    option3.classList.add('col-md-12');
+    option3.classList.add('d-flex');
+    option3.classList.add('justify-content-center');
+    option3.innerHTML = "Question " + questionsNumber + " of " + " 5 " + "Score: " + questionsHit * 20 + "%";
+
+    qH2.appendChild(option3);
+    qH1.appendChild(qH2);
+    questionHolder.appendChild(qH1);
+
+
+
+    // BLOCK --> Question
+    qQ1 = document.createElement('div');
+    qQ1.classList.add("container-fluid");
+
+    qQ2 = document.createElement('div');
+    qQ2.classList.add("row");
+    qQ2.classList.add("align-items-center");
+
+    option4 = document.createElement('div');
+    option4.classList.add('col-md-12');
+    option4.classList.add('d-flex');
+    option4.classList.add('justify-content-center');
+    option4.innerHTML = currentQuestion.question;
+
+    qQ2.appendChild(option4);
+    qQ1.appendChild(qQ2);
+    questionHolder.appendChild(qQ1);
+
+
+
     // console.log(globalJSON.legend[0].question);
 
     // console.log(globalJSON[0].question, counter);
@@ -114,6 +156,10 @@ var createQuestionElements = function (currentQuestion) {
     question.innerHTML = '<div class="container-fluid"><div class="row align-items-center""><div class="col">' + currentQuestion.question + '</div></div></div>';
     // question.innerHTML = currentQuestion.question;
     questionHolder.appendChild(question);
+
+
+
+
 
     counter += 1;
     // diver = document.createElement('div');
@@ -346,7 +392,7 @@ var showScore = function () {
 var getQuestion = function () {
     if (typeof questions !== undefined && questions.length > 0) {
         var currentQuestion = questions.shift();
- 
+
         createQuestionElements(currentQuestion);
     } else {
         showScore();
