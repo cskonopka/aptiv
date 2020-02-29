@@ -110,7 +110,7 @@ var createQuestionElements = function (currentQuestion) {
     //     console.log(globalJSON[i]);
     // }
     // qcount.innerHTML = "Question " + questionsNumber + " of 5" + " - " + "Score: " + questionsHit * 20 + "%";
-    qcount.innerHTML = '<div class="container-fluid"><div class="row align-items-center""><div class="col">' + "Question " + questionsNumber + " of " + " 5 " + "Score: " + questionsHit * 20 + "%" + '</div></div></div>';
+    qcount.innerHTML = '<div class="container-fluid"><div class="row align-items-center""><div class="col">' + "Question " + questionsNumber + " of " + " - " + "Score: " + questionsHit * 20 + "%" + '</div></div></div>';
     question.innerHTML = '<div class="container-fluid"><div class="row align-items-center""><div class="col">' + currentQuestion.question + '</div></div></div>';
     // question.innerHTML = currentQuestion.question;
     questionHolder.appendChild(question);
@@ -293,53 +293,81 @@ var validateAnswer = function (currentQuestion) {
 };
 
 var showScore = function () {
-    // console.log(globalJSON);
     console.log(element);
+
     var firstHeading = document.createElement('h2');
     firstHeading.innerHTML = 'Congratulations for finish the Quiz!!!';
 
     var secondHeading = document.createElement('h3');
-    secondHeading.innerHTML = 'Your score is ' + questionsHit + ' out of 5';
+    secondHeading.innerHTML = 'Your score is ' + questionsHit + ' out of ' + ((questionsNumber-1==NaN) ? '0' : questionsNumber-1) 
 
-    var downloadButton = document.createElement('div');
-    downloadButton.innerHTML = '<button class="btn btn-link" onclick="clickDL()">download results</button>';
+    var downloadButton = document.createElement('button');
+    downloadButton.innerHTML = '<button class="btn" onclick="clickDL()">download results</button>';
 
     quiz.appendChild(firstHeading);
     quiz.appendChild(secondHeading);
     quiz.appendChild(downloadButton);
 
+    // var data = document.createElement('p');
+    // var i = 0;
+    // var text = ["text1", "tex2", "text3", "text4"];
     for (var key in element) {
-        var resultsDiv = document.createElement('p');
-        console.log(element[key].q);
-        resultsDiv.innerHTML = element[key].q;
-        quiz.appendChild(resultsDiv);
+        var newdiv = document.createElement('div');
+        var collapse = "collapse" + key;
+
+        newdiv.innerHTML = '<div class="accordion" id="accordionExample">' + '<div class="card"><div class="card-header" id="headingOne">' +
+            '<h2 class="mb-0"><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#' + collapse + '" aria-expanded="false" aria-controls="' + collapse + '">' + element[key].q + '</button></h2></div>' +
+            '<div id="' + collapse + '" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample"><div class="card-body">'
+
+
+
+            /*
+        diverA = document.createElement('div');
+        diverA.classList.add("container-fluid");
+
+        diver2 = document.createElement('div');
+        diver2.classList.add("row");
+        diver2.classList.add("align-items-center");
+
 
         for (var i = 0; i < element[key].choices.length; i++) {
-            if (element[key].choices[i] == element[key].selected) {
-                console.log("SELECTED --> " + element[key].choices[i]);
-                if (element[key].selected == element[key].answer) {
-                    console.log("right");
-                    var option = document.createElement('p');
-                    option.innerHTML = '<font color="green">' + element[key].selected + '</font>';
-                    resultsDiv.append(option);
-                } else if (element[key].selected != element[key].answer) {
-                    console.log("wrong");
-                    var option = document.createElement('p');
-                    option.innerHTML = '<font color="red">' + element[key].selected + '</font>';
-                    resultsDiv.append(option);
-                    var option2 = document.createElement('p');
-                    option2.innerHTML = '<font color="green">' + element[key].answer + '</font>';
-                    resultsDiv.append(option2);
-                }
 
-                // }
+            option = document.createElement('div');
+            option.classList.add('col-md-3');
+
+            if (element[key].choices[i] == element[key].answer) {
+                option.innerHTML = element[key].choices[i];
+                console.log("CORRECT --> " + element[key].choices[i]);
             } else {
-                // console.log("the rest --> " + element[key].choices[i]);
-                // var option = document.createElement('p');
-                // option.innerHTML = element[key].choices[i];
-                // resultsDiv.append(option);
+                option.innerHTML = element[key].choices[i];
+                console.log("WRONG --> " + element[key].choices[i]);
             }
+
+            // label.innerHTML = '<div class="container-fluid"><div class="row align-items-center"><div class="col-sm-3">' + currentQuestion.choices[i] + '</div></div></div>';;
+            diver2.appendChild(option);
         }
+        quiz.appendChild(newdiv);
+        var ender = document.createElement('div');
+        ender.innerHTM = '</div></div></div>';
+        quiz.appendChild(ender);
+    */
+
+       quiz.appendChild(newdiv);
+
+       var ender = document.createElement('div');
+       ender.innerHTML = '</div></div></div>';
+       quiz.appendChild(ender);
+
+        // data.innerHTML = element[key].q;
+        // var div = document.createElement("div");
+
+        // div.className = "finalBlock";
+
+        // div.innerHTML = element[key].q;
+        // quiz.appendChild(div);
+
+        // div.innerHTML = element[key].choice;
+        // div.innerHTML = element[key].answer;
     }
 }
 
