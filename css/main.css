@@ -53,8 +53,8 @@ form {
   display: flex;
 }
 #quiz {
-  width: 70%;
-  margin: 30px auto;
+  width: 100%;
+  margin: 0px auto;
   padding: 2em 0;
   background: #ffffff;
   box-shadow: -10px 0 #fffff;
