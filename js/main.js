@@ -1,6 +1,3 @@
-// Problem: Create an Awesome Web App quiz using an object full of questions...
-// Solution: Add interactivity to our app using events...
-
 var quiz = document.getElementById('quiz'),
     btnStart = document.getElementById('start-quiz'),
     questionsHit = 0,
@@ -14,10 +11,7 @@ var quiz = document.getElementById('quiz'),
     jester = new Object, // 
     percentage;
 
-
-// Initialize questions from local JSON file.
-init();
-
+init(); // Initialize questions from local JSON file.
 
 /*
     init
@@ -115,7 +109,6 @@ var createQuestionElements = function (currentQuestion) {
 
         radio = document.createElement('input');
         label = document.createElement('label');
-        btn = document.createElement('a');
 
         radio.type = 'radio';
         radio.name = 'choice';
@@ -210,13 +203,9 @@ var checkAnswer = function (option, currentQuestion) {
     getQuestion();
 };
 
-
-
-
 var showScore = function () {
-
     var firstHeading = document.createElement('h1');
-    firstHeading.innerHTML = '<font color="black">Results</font>';
+    firstHeading.innerHTML = '<font color="black">Aptiv Quiz Results</font>';
 
     qH2 = document.createElement('div');
     qH2.classList.add("row");
@@ -248,25 +237,49 @@ var showScore = function () {
 
     // Add each questions 
     for (var key in element) {
-        
+        qH3 = document.createElement('div');
+        qH3.classList.add("row");
+        qH3.classList.add("align-items-center");
 
-        
-        var resultsDiv = document.createElement('p');
+        option5 = document.createElement('div');
+        option5.classList.add('col-md-12');
+        option5.classList.add('d-flex');
+        option5.classList.add('justify-content-center');
+
+        var resultsDiv = document.createElement('h4');
         console.log(element[key].q);
         resultsDiv.innerHTML = element[key].q;
-        quiz.appendChild(resultsDiv);
+
+        option5.appendChild(resultsDiv)
+        quiz.appendChild(option5);
+
+        option5 = document.createElement('div');
+
         // Colorize the true and false answers 
         for (var i = 0; i < element[key].choices.length; i++) {
             if (element[key].choices[i] == element[key].selected) {
                 if (element[key].selected == element[key].answer) { // right
-                    var option = document.createElement('p');
+                    option5.classList.add('col-md-12');
+                    option5.classList.add('d-flex');
+                    option5.classList.add('justify-content-center');
+
+                    var option = document.createElement('h5');
+                    option.classList.add('text-center');
                     option.innerHTML = '<font color="green">' + element[key].selected + '</font>';
                     resultsDiv.append(option);
                 } else if (element[key].selected != element[key].answer) { // wrong
-                    var option = document.createElement('p');
-                    option.innerHTML = '<font color="red">' + element[key].selected + '</font>';
+
+                    option5.classList.add('col-md-6');
+                    option5.classList.add('d-flex');
+                    option5.classList.add('justify-content-center');
+
+                    var option = document.createElement('h5');
+                    option.classList.add('text-center');
+                    option.innerHTML = '<font color="red">Wrong: ' + element[key].selected + '</font>';
                     resultsDiv.append(option);
-                    var option2 = document.createElement('p');
+
+                    var option2 = document.createElement('h5');
+                    option2.classList.add('text-center');
                     option2.innerHTML = '<font color="green">' + element[key].answer + '</font>';
                     resultsDiv.append(option2);
                 }
@@ -274,10 +287,9 @@ var showScore = function () {
         }
     }
 
-    // Create the download button
+    // Create the download button, append to HTML
     var downloadButton = document.createElement('div');
     downloadButton.innerHTML = '<button class="btn btn-link" onclick="clickDL()">Download Results (.JSON)</button>';
-
     quiz.appendChild(downloadButton);
 }
 
@@ -296,10 +308,11 @@ function clickDL() {
     a.click();
 }
 
-
-
+/*
+    btnStart
+    --> Click Submit and get a new question
+*/
 btnStart.addEventListener('click', function () {
-    loadJSON("js/leg2.json");
     quiz.innerHTML = '';
     getQuestion();
 });
