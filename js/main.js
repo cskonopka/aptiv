@@ -1,15 +1,11 @@
 var quiz = document.getElementById('quiz'),
     btnStart = document.getElementById('start-quiz'),
-    questionsHit = 0,
-    questionsNumber = 1,
-    counter = 0,
-    questionsCorrect = [],
-    whichquestion = [],
-    whichwrong = [],
+    questionsHit = 0, // Tracking correct submissions
+    questionsNumber = 1, // Tracking question number
+    counter = 0, 
     globalJSON = [], // Local JSON file 
-    element = [], // 
-    jester = new Object, // 
-    percentage;
+    element = [], // Appends internalDataPacket objects for score results
+    internalDataPacket = new Object; // Object for collecting user submissions
 
 init(); // Initialize questions from local JSON file.
 
@@ -31,10 +27,9 @@ function init() {
 function loadJSON(callback) {
     var xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
-    xobj.open('GET', 'js/leg10.json', true); // Replace 'my_data' with the path to your file
+    xobj.open('GET', 'json/questions.json', true); 
     xobj.onreadystatechange = function () {
         if (xobj.readyState == 4 && xobj.status == "200") {
-            // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
             callback(xobj.responseText);
         }
     };
@@ -179,24 +174,24 @@ var validateAnswer = function (currentQuestion) {
 var checkAnswer = function (option, currentQuestion) {
     if (option.lastElementChild.innerHTML === currentQuestion.choices[currentQuestion.correctAnswer]) {
         questionsHit = questionsHit + 1;
-        whichquestion = whichquestion.concat(currentQuestion.question);
-        jester = {
+        // whichquestion = whichquestion.concat(currentQuestion.question);
+        internalDataPacket = {
             q: currentQuestion.question,
             selected: option.lastElementChild.innerHTML,
             choices: currentQuestion.choices,
             answer: currentQuestion.choices[currentQuestion.correctAnswer],
             state: true
         };
-        element.push(jester);
+        element.push(internalDataPacket);
     } else {
-        jester = {
+        internalDataPacket = {
             q: currentQuestion.question,
             selected: option.lastElementChild.innerHTML,
             choices: currentQuestion.choices,
             answer: currentQuestion.choices[currentQuestion.correctAnswer],
             state: false
         };
-        element.push(jester);
+        element.push(internalDataPacket);
     }
     questionsNumber = questionsNumber + 1;
     quiz.innerHTML = '';
@@ -219,9 +214,8 @@ var showScore = function () {
     option4.appendChild(firstHeading);
     quiz.appendChild(option4);
 
-    // 
     var secondHeading = document.createElement('h2');
-    secondHeading.innerHTML = '<font color="black">Your score is ' + questionsHit + ' out of 5</font>';
+    secondHeading.innerHTML = '<font color="black">Your score is ' + questionsHit + ' out of 5 - ' + questionsHit*20 +'%</font>';
 
     qH3 = document.createElement('div');
     qH3.classList.add("row");
