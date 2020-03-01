@@ -60,117 +60,114 @@ var createQuestionElements = function (currentQuestion) {
         label,
         btn;
 
-    // BLOCK --> Info container
+    // BLOCK --> Question Layout
     var questionHolder = document.createElement('div');
 
-    var firstHeading = document.createElement('h1');
-    firstHeading.innerHTML = '<font color="black">Aptiv Quiz</font>';
+    // BLOCK --> Aptiv header
+    var headerAptiv = document.createElement('h1');
+    headerAptiv.innerHTML = '<font color="black">Aptiv Quiz</font>';
 
-    qH3 = document.createElement('div');
-    qH3.classList.add("row");
-    qH3.classList.add("align-items-center");
+    headerAptivRow = document.createElement('div');
+    headerAptivRow.classList.add("row");
+    headerAptivRow.classList.add("align-items-center");
 
-    option10 = document.createElement('div');
-    option10.classList.add('col-md-12');
-    option10.classList.add('d-flex');
-    option10.classList.add('justify-content-center');
+    headerAptivCol = document.createElement('div');
+    headerAptivCol.classList.add('col-md-12');
+    headerAptivCol.classList.add('d-flex');
+    headerAptivCol.classList.add('justify-content-center');
 
-    option10.appendChild(firstHeading);
-    questionHolder.appendChild(option10);
+    headerAptivCol.appendChild(headerAptiv);
+    headerAptivRow.appendChild(headerAptivCol);
+    questionHolder.appendChild(headerAptivRow);
 
+    // BLOCK --> Number of questions correct header
+    currentQuestionNumberRow = document.createElement('div');
+    currentQuestionNumberRow.classList.add("row");
+    currentQuestionNumberRow.classList.add("align-items-center");
 
-    // BLOCK --> Score
-    qH2 = document.createElement('div');
-    qH2.classList.add("row");
-    qH2.classList.add("align-items-center");
+    currentQuestionNumberCol = document.createElement('div');
+    currentQuestionNumberCol.classList.add('col-md-12');
+    currentQuestionNumberCol.classList.add('d-flex');
+    currentQuestionNumberCol.classList.add('justify-content-center');
+    currentQuestionNumberCol.innerHTML = "<h2><font color='black'>Question " + questionsNumber + " of " + " 5 </h2>";
 
-    option3 = document.createElement('div');
-    option3.classList.add('col-md-12');
-    option3.classList.add('d-flex');
-    option3.classList.add('justify-content-center');
-    option3.innerHTML = "<h2><font color='black'>Question " + questionsNumber + " of " + " 5 </h2>";
+    currentQuestionNumberRow.appendChild(currentQuestionNumberCol);
+    questionHolder.appendChild(currentQuestionNumberRow);
 
-    qH2.appendChild(option3);
-    questionHolder.appendChild(qH2);
+    // BLOCK --> Score percent header
+    headerShowPercentRow = document.createElement('div');
+    headerShowPercentRow.classList.add("row");
+    headerShowPercentRow.classList.add("align-items-center");
 
-    // BLOCK --> Score
-    qS2 = document.createElement('div');
-    qS2.classList.add("row");
-    qS2.classList.add("align-items-center");
+    headerShowPercentCol = document.createElement('div');
+    headerShowPercentCol.classList.add('col-md-12');
+    headerShowPercentCol.classList.add('d-flex');
+    headerShowPercentCol.classList.add('justify-content-center');
+    headerShowPercentCol.innerHTML = "<h3><font color='black'>Score: " + questionsHit * 20 + "%" + "</font></h3>";
 
-    option8 = document.createElement('div');
-    option8.classList.add('col-md-12');
-    option8.classList.add('d-flex');
-    option8.classList.add('justify-content-center');
-    option8.innerHTML = "<h3><font color='black'>Score: " + questionsHit * 20 + "%" + "</font></h3>";
+    headerShowPercentRow.appendChild(headerShowPercentCol);
+    questionHolder.appendChild(headerShowPercentRow);
 
-    qS2.appendChild(option8);
-    questionHolder.appendChild(qS2);
+    // BLOCK --> Current question
+    headerCurrentQuestionRow = document.createElement('div');
+    headerCurrentQuestionRow.classList.add("row");
+    headerCurrentQuestionRow.classList.add("align-items-center");
 
-    // BLOCK --> Question
-    qQ2 = document.createElement('div');
-    qQ2.classList.add("row");
-    qQ2.classList.add("align-items-center");
+    headerCurrentQuestionCol = document.createElement('div');
+    headerCurrentQuestionCol.classList.add('col-md-12');
+    headerCurrentQuestionCol.classList.add('d-flex');
+    headerCurrentQuestionCol.classList.add('justify-content-center');
+    headerCurrentQuestionCol.innerHTML = "<h4><font color='black'>" + currentQuestion.question + "</font></h4>";
 
-    option4 = document.createElement('div');
-    option4.classList.add('col-md-12');
-    option4.classList.add('d-flex');
-    option4.classList.add('justify-content-center');
-    option4.innerHTML = "<h4><font color='black'>" + currentQuestion.question + "</font></h4>";
+    headerCurrentQuestionRow.appendChild(headerCurrentQuestionCol);
+    questionHolder.appendChild(headerCurrentQuestionRow);
 
-    qQ2.appendChild(option4);
-    questionHolder.appendChild(qQ2);
-
-    // BLOCK --> Radio group
-    diver2 = document.createElement('div');
-    diver2.classList.add("row");
-    diver2.classList.add("align-items-center");
+    // BLOCK --> Multiple choice question radio group
+    groupRadioRow = document.createElement('div');
+    groupRadioRow.classList.add("row");
+    groupRadioRow.classList.add("align-items-center");
 
     for (var i = 0; i < 4; i++) {
-        option = document.createElement('div');
-        option.classList.add('col-md-3');
-        option.classList.add('d-flex');
-        option.classList.add('justify-content-center');
+        groupRadioCol = document.createElement('div');
+        groupRadioCol.classList.add('col-md-3');
+        groupRadioCol.classList.add('d-flex');
+        groupRadioCol.classList.add('justify-content-center');
 
         radio = document.createElement('input');
-        label = document.createElement('label');
-
         radio.type = 'radio';
+        label = document.createElement('label');
         radio.name = 'choice';
 
-        option.appendChild(radio);
-        option.appendChild(label);
+        groupRadioCol.appendChild(radio);
+        groupRadioCol.appendChild(label);
 
         label.innerHTML = currentQuestion.choices[i];
-        diver2.appendChild(option);
+        groupRadioRow.appendChild(groupRadioCol);
     }
-    questionHolder.appendChild(diver2);
+    questionHolder.appendChild(groupRadioRow);
 
     // BLOCK --> Submit Button
-    qH2 = document.createElement('div');
-    qH2.classList.add("row");
-    qH2.classList.add("align-items-center");
+    currentQuestionNumberRow = document.createElement('div');
+    currentQuestionNumberRow.classList.add("row");
+    currentQuestionNumberRow.classList.add("align-items-center");
 
-    option4 = document.createElement('div');
-    option4.classList.add('col-md-12');
-    option4.classList.add('d-flex');
-    option4.classList.add('justify-content-center');
+    currentQuestionNumberCol = document.createElement('div');
+    currentQuestionNumberCol.classList.add('col-md-12');
+    currentQuestionNumberCol.classList.add('d-flex');
+    currentQuestionNumberCol.classList.add('justify-content-center');
 
     var btn = document.createElement("button")
     btn.classList.add('btn');
     btn.classList.add('btn-small');
     btn.innerHTML = 'Submit';
 
-    option4.appendChild(btn);
-    qH2.appendChild(option4);
-    questionHolder.appendChild(qH2);
+    currentQuestionNumberCol.appendChild(btn);
+    currentQuestionNumberRow.appendChild(currentQuestionNumberCol);
+    questionHolder.appendChild(currentQuestionNumberRow);
 
     btn.addEventListener('click', function () {
         validateAnswer(currentQuestion);
     });
-
-
-    // BLOCK --> Adding to the page
     quiz.appendChild(questionHolder);
 }
 
@@ -179,9 +176,7 @@ var createQuestionElements = function (currentQuestion) {
     --> Check which radio group button is checked
 */
 var validateAnswer = function (currentQuestion) {
-    console.log("clicked");
     var input = document.querySelectorAll('input');
-
     var inputCounter = 0;
     for (var i = 0; i < input.length; i++) {
         if (input[i].checked) {
@@ -189,11 +184,10 @@ var validateAnswer = function (currentQuestion) {
         }
     }
     if (inputCounter > 0) {
-        // document.querySelector('.question-alert').style.display = 'none';
         var option = document.querySelector('input:checked').parentNode;
         checkAnswer(option, currentQuestion);
     } else {
-        // document.querySelector('.question-alert').style.display = 'block';
+
     }
 };
 
@@ -228,13 +222,18 @@ var checkAnswer = function (option, currentQuestion) {
     getQuestion();
 };
 
+/*
+    checkAnswer
+    --> Display results of the quiz
+*/
 var showScore = function () {
+    // BLOCK --> Quiz results
     var firstHeading = document.createElement('h1');
     firstHeading.innerHTML = '<font color="black">Aptiv Quiz Results</font>';
 
     qH2 = document.createElement('div');
     qH2.classList.add("row");
-    qH2.classList.add("align-items-center");
+    qH2.classList.add("justify-content-center");
 
     option4 = document.createElement('div');
     option4.classList.add('col-md-12');
@@ -242,43 +241,69 @@ var showScore = function () {
     option4.classList.add('justify-content-center');
 
     option4.appendChild(firstHeading);
-    quiz.appendChild(option4);
+    qH2.appendChild(option4);
+    quiz.appendChild(qH2);
 
+
+    // // BLOCK --> Aptiv header
+    // var headerAptiv = document.createElement('h1');
+    // headerAptiv.innerHTML = '<font color="black">Aptiv Quiz</font>';
+
+    // headerAptivRow = document.createElement('div');
+    // headerAptivRow.classList.add("row");
+    // headerAptivRow.classList.add("justify-content-center");
+
+    // headerAptivCol = document.createElement('div');
+    // headerAptivCol.classList.add('col-md-12');
+    // headerAptivCol.classList.add('d-flex');
+    // headerAptivCol.classList.add('justify-content-center');
+
+    // headerAptivCol.appendChild(headerAptiv);
+    // headerAptivRow.appendChild(headerAptivCol);
+    // questionHolder.appendChild(headerAptivRow);
+
+
+    // 
+    // var secondHeading = document.createElement('h2');
+    // secondHeading.innerHTML = '<font color="black">Your score is ' + questionsHit + ' out of 5</font>';
+
+    // qH3 = document.createElement('div');
+    // qH3.classList.add("row");
+    // qH3.classList.add("justify-content-center");
+
+    // option5 = document.createElement('div');
+    // option5.classList.add('col-md-12');
+    // option5.classList.add('d-flex');
+    // option5.classList.add('justify-content-center');
+
+    // option5.appendChild(secondHeading);
+    // quiz.appendChild(option5);
+
+    // BLOCK --> Number of correct questions
     var secondHeading = document.createElement('h2');
     secondHeading.innerHTML = '<font color="black">' + questionsHit + ' out of 5 questions are correct</font>';
 
     qH3 = document.createElement('div');
     qH3.classList.add("row");
-    qH3.classList.add("align-items-center");
+    qH3.classList.add("justify-content-center");
 
     option5 = document.createElement('div');
     option5.classList.add('col-md-12');
     option5.classList.add('d-flex');
     option5.classList.add('justify-content-center');
 
+    // option5.appendChild(secondHeading);
+    // quiz.appendChild(option5);
+
     option5.appendChild(secondHeading);
-    quiz.appendChild(option5);
-
-    var thirdHeading = document.createElement('h3');
-    thirdHeading.innerHTML = '<font color="black">Score - ' + questionsHit * 20 + '%</font>';
-
-    qS3 = document.createElement('div');
-    qS3.classList.add("row");
-    qS3.classList.add("align-items-center");
-
-    option9 = document.createElement('div');
-    option9.classList.add('col-md-12');
-    option9.classList.add('d-flex');
-    option9.classList.add('justify-content-center');
-
-    option9.appendChild(thirdHeading);
-    quiz.appendChild(option9);
+    qH3.appendChild(option5);
+    quiz.appendChild(qH3);
 
     // Add each questions 
     for (var key in element) {
         qH3 = document.createElement('div');
         qH3.classList.add("row");
-        qH3.classList.add("align-items-center");
+        qH3.classList.add("justify-content-center");
 
         option5 = document.createElement('div');
         option5.classList.add('col-md-12');
@@ -290,14 +315,25 @@ var showScore = function () {
         resultsDiv.innerHTML = element[key].q;
 
         option5.appendChild(resultsDiv)
-        quiz.appendChild(option5);
+        qH3.appendChild(option5);
+        quiz.appendChild(qH3);
 
-        option5 = document.createElement('div');
+        // option5 = document.createElement('div');
+        // option5.classList.add('col-md-12');
+        // option5.classList.add('d-flex');
+        // option5.classList.add('justify-content-center');
 
         // Colorize the true and false answers 
         for (var i = 0; i < element[key].choices.length; i++) {
             if (element[key].choices[i] == element[key].selected) {
                 if (element[key].selected == element[key].answer) { // right
+
+
+                    qH3 = document.createElement('div');
+                    qH3.classList.add("row");
+                    qH3.classList.add("justify-content-center");
+            
+                    option5 = document.createElement('div');
                     option5.classList.add('col-md-12');
                     option5.classList.add('d-flex');
                     option5.classList.add('justify-content-center');
@@ -305,22 +341,48 @@ var showScore = function () {
                     var option = document.createElement('h5');
                     option.classList.add('text-center');
                     option.innerHTML = '<font color="green">' + element[key].selected + '</font>';
-                    resultsDiv.append(option);
+                    
+                    option5.appendChild(option);
+                    qH3.appendChild(option5);
+                    quiz.appendChild(qH3);
+
                 } else if (element[key].selected != element[key].answer) { // wrong
 
-                    option5.classList.add('col-md-6');
+                    qH3 = document.createElement('div');
+                    qH3.classList.add('row');
+                    qH3.classList.add('justify-content-center');
+            
+                    option5 = document.createElement('div');
+                    option5.classList.add('col-md-4');
                     option5.classList.add('d-flex');
                     option5.classList.add('justify-content-center');
 
+                    option6 = document.createElement('div');
+                    option6.classList.add('col-md-4');
+                    option6.classList.add('d-flex');
+                    option6.classList.add('justify-content-center');
+                   
                     var option = document.createElement('h5');
                     option.classList.add('text-center');
-                    option.innerHTML = '<font color="red">Wrong: ' + element[key].selected + '</font>';
-                    resultsDiv.append(option);
+                    option.innerHTML = '<font color="red">' + element[key].selected + '</font>';
+
+                    option5.appendChild(option);
+                    qH3.appendChild(option5);
+                    quiz.appendChild(qH3);
+            
+                    option22 = document.createElement('div');
+                    option22.classList.add('col-md-6');
+                    option22.classList.add('d-flex');
+                    option22.classList.add('justify-content-center');
 
                     var option2 = document.createElement('h5');
                     option2.classList.add('text-center');
                     option2.innerHTML = '<font color="green">' + element[key].answer + '</font>';
-                    resultsDiv.append(option2);
+
+                    option6.appendChild(option2);
+                    qH3.appendChild(option6);
+                    quiz.appendChild(qH3);
+
                 }
             }
         }
