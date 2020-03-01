@@ -9,142 +9,174 @@ var questionsCorrect = [];
 var whichquestion = [];
 var whichwrong = [];
 
-var globalJSON = [];
+
 var percentage;
 
-var element = [
-    {
-        "q": "What is the capital of Canada?",
-        "selected": "Madrid",
-        "choices": [
-            "São Paulo",
-            "Madrid",
-            "Ottawa",
-            "Cairo"
-        ],
-        "answer": "Ottawa",
-        "state": false,
-        "answers": [
-            0,
-            1,
-            3
-        ]
-    },
-    {
-        "q": "What is the capital of Sweeden?",
-        "selected": "Moscow",
-        "choices": [
-            "Tokyio",
-            "Estocolmo",
-            "Moscow",
-            "Havana"
-        ],
-        "answer": "Estocolmo",
-        "state": false,
-        "answers": [
-            0,
-            2,
-            3
-        ]
-    },
-    {
-        "q": "What is the capital of Germany?",
-        "selected": "Berlim",
-        "choices": [
-            "Berlim",
-            "Paris",
-            "Lyon",
-            "Montevidéu"
-        ],
-        "answer": "Berlim",
-        "state": true,
-        "answers": [
-            1,
-            2,
-            3
-        ]
-    },
-    {
-        "q": "What is the capital of Argentina?",
-        "selected": "Bueno Aires",
-        "choices": [
-            "Munique",
-            "Kiev",
-            "New York",
-            "Bueno Aires"
-        ],
-        "answer": "Bueno Aires",
-        "state": true,
-        "answers": [
-            0,
-            1,
-            2
-        ]
-    },
-    {
-        "q": "What is the capital of Norway?",
-        "selected": "Sidney",
-        "choices": [
-            "Beijing",
-            "Oslo",
-            "Sidney",
-            "Seattle"
-        ],
-        "answer": "Oslo",
-        "state": false,
-        "answers": [
-            0,
-            2,
-            3
-        ]
-    }
-];
+var element = [];
+// var element = [
+//     {
+//         "q": "What is the capital of Canada?",
+//         "selected": "Madrid",
+//         "choices": [
+//             "São Paulo",
+//             "Madrid",
+//             "Ottawa",
+//             "Cairo"
+//         ],
+//         "answer": "Ottawa",
+//         "state": false,
+//         "answers": [
+//             0,
+//             1,
+//             3
+//         ]
+//     },
+//     {
+//         "q": "What is the capital of Sweeden?",
+//         "selected": "Moscow",
+//         "choices": [
+//             "Tokyio",
+//             "Estocolmo",
+//             "Moscow",
+//             "Havana"
+//         ],
+//         "answer": "Estocolmo",
+//         "state": false,
+//         "answers": [
+//             0,
+//             2,
+//             3
+//         ]
+//     },
+//     {
+//         "q": "What is the capital of Germany?",
+//         "selected": "Berlim",
+//         "choices": [
+//             "Berlim",
+//             "Paris",
+//             "Lyon",
+//             "Montevidéu"
+//         ],
+//         "answer": "Berlim",
+//         "state": true,
+//         "answers": [
+//             1,
+//             2,
+//             3
+//         ]
+//     },
+//     {
+//         "q": "What is the capital of Argentina?",
+//         "selected": "Bueno Aires",
+//         "choices": [
+//             "Munique",
+//             "Kiev",
+//             "New York",
+//             "Bueno Aires"
+//         ],
+//         "answer": "Bueno Aires",
+//         "state": true,
+//         "answers": [
+//             0,
+//             1,
+//             2
+//         ]
+//     },
+//     {
+//         "q": "What is the capital of Norway?",
+//         "selected": "Sidney",
+//         "choices": [
+//             "Beijing",
+//             "Oslo",
+//             "Sidney",
+//             "Seattle"
+//         ],
+//         "answer": "Oslo",
+//         "state": false,
+//         "answers": [
+//             0,
+//             2,
+//             3
+//         ]
+//     }
+// ];
 
 
 
-// Array of Questions...
-var questions = [
-    {
-        question: 'What is the capital of Canada?',
-        choices: [
-            'São Paulo', 'Madrid', 'Ottawa', 'Cairo'
-        ],
-        correctAnswer: 2,
-        wrongAnswers: [0, 1, 3]
-    },
-    {
-        question: 'What is the capital of Sweeden?',
-        choices: [
-            'Tokyio', 'Estocolmo', 'Moscow', 'Havana'
-        ],
-        correctAnswer: 1,
-        wrongAnswers: [0, 2, 3]
-    },
-    {
-        question: 'What is the capital of Germany?',
-        choices: [
-            'Berlim', 'Paris', 'Lyon', 'Montevidéu'
-        ],
-        correctAnswer: 0,
-        wrongAnswers: [1, 2, 3]
-    },
-    {
-        question: 'What is the capital of Argentina?',
-        choices: [
-            'Munique', 'Kiev', 'New York', 'Bueno Aires'
-        ],
-        correctAnswer: 3,
-        wrongAnswers: [0, 1, 2]
-    }, {
-        question: 'What is the capital of Norway?',
-        choices: [
-            'Beijing', 'Oslo', 'Sidney', 'Seattle'
-        ],
-        correctAnswer: 1,
-        wrongAnswers: [0, 2, 3]
-    },
-];
+// // Array of Questions...
+// var questions = [
+//     {
+//         question: 'What is the capital of Canada?',
+//         choices: [
+//             'São Paulo', 'Madrid', 'Ottawa', 'Cairo'
+//         ],
+//         correctAnswer: 2,
+//         wrongAnswers: [0, 1, 3]
+//     },
+//     {
+//         question: 'What is the capital of Sweeden?',
+//         choices: [
+//             'Tokyio', 'Estocolmo', 'Moscow', 'Havana'
+//         ],
+//         correctAnswer: 1,
+//         wrongAnswers: [0, 2, 3]
+//     },
+//     {
+//         question: 'What is the capital of Germany?',
+//         choices: [
+//             'Berlim', 'Paris', 'Lyon', 'Montevidéu'
+//         ],
+//         correctAnswer: 0,
+//         wrongAnswers: [1, 2, 3]
+//     },
+//     {
+//         question: 'What is the capital of Argentina?',
+//         choices: [
+//             'Munique', 'Kiev', 'New York', 'Bueno Aires'
+//         ],
+//         correctAnswer: 3,
+//         wrongAnswers: [0, 1, 2]
+//     }, {
+//         question: 'What is the capital of Norway?',
+//         choices: [
+//             'Beijing', 'Oslo', 'Sidney', 'Seattle'
+//         ],
+//         correctAnswer: 1,
+//         wrongAnswers: [0, 2, 3]
+//     },
+// ];
 
+var globalJSON = [];
+
+init();
+
+function init() {
+    loadJSON(function(response) {
+        actual_JSON = JSON.parse(response);  
+        consumeData(actual_JSON); //call another function with the actual JSON
+    });
+}
+
+function consumeData(actualJson) {
+    console.log(actualJson[0]);
+    globalJSON = actualJson;
+    //write the rest of the code here
+}
+
+
+
+function loadJSON(callback) {   
+    var xobj = new XMLHttpRequest();
+    xobj.overrideMimeType("application/json");
+    xobj.open('GET', 'js/leg10.json', true); // Replace 'my_data' with the path to your file
+    xobj.onreadystatechange = function () {
+      if (xobj.readyState == 4 && xobj.status == "200") {
+        // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+        callback(xobj.responseText);
+      }
+  };
+  xobj.send(null);  
+}
 
 function readJSON(path) {
     var xhr = new XMLHttpRequest();
@@ -168,7 +200,7 @@ function readJSON(path) {
 var counter = 0;
 // Creating question Structure...
 var createQuestionElements = function (currentQuestion) {
-
+    console.log(currentQuestion);
     counter += 1;
 
     var option,
@@ -176,6 +208,7 @@ var createQuestionElements = function (currentQuestion) {
         label,
         btn;
 
+        // console.log(gg);
     // BLOCK --> Info container
     var questionHolder = document.createElement('div');
 
@@ -339,8 +372,8 @@ var validateAnswer = function (currentQuestion) {
 
 var showScore = function () {
     // console.log(globalJSON);
-    console.log(element);
-    console.log(percentage);
+    console.log("element ----> " + element);
+    // console.log(percentage);
     var firstHeading = document.createElement('h1');
     firstHeading.innerHTML = '<font color="black">Results</font>';
 
@@ -392,18 +425,24 @@ var showScore = function () {
 }
 
 var getQuestion = function () {
-    if (typeof questions !== undefined && questions.length > 0) {
-        var currentQuestion = questions.shift();
+    // console.log("questions ----> "+questions);
+    console.log("questions ----> "+globalJSON);
+
+    // if (typeof questions !== undefined && questions.length > 0) {
+    if (typeof globalJSON !== undefined && globalJSON.length > 0) {
+        var currentQuestion = globalJSON.shift();
 
         createQuestionElements(currentQuestion);
+        
     } else {
         showScore();
     }
 }
 
 btnStart.addEventListener('click', function () {
-    console.log('asf');
     readJSON("js/leg2.json");
+    console.log('asf');
+
     quiz.innerHTML = '';
     getQuestion();
     // showScore();
