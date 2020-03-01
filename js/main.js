@@ -9,25 +9,31 @@ var quiz = document.getElementById('quiz'),
     questionsCorrect = [],
     whichquestion = [],
     whichwrong = [],
-    globalJSON = [],
-    element = [],
-    jester = new Object,
+    globalJSON = [], // Local JSON file 
+    element = [], // 
+    jester = new Object, // 
     percentage;
 
+
+// Initialize questions from local JSON file.
 init();
 
+
+/*
+    init
+    --> Initialization function
+*/
 function init() {
     loadJSON(function (response) {
         actual_JSON = JSON.parse(response);
-        consumeData(actual_JSON); //call another function with the actual JSON
+        globalJSON = actual_JSON;
     });
 }
 
-function consumeData(actualJson) {
-    console.log(actualJson[0]);
-    globalJSON = actualJson;
-}
-
+/*
+    loadJSON
+    --> Load local JSON file using GET request
+*/
 function loadJSON(callback) {
     var xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
@@ -41,11 +47,25 @@ function loadJSON(callback) {
     xobj.send(null);
 }
 
-// Creating question Structure...
+/*
+    getQuestion
+    --> Fetch the current question and generate question HTML.
+*/
+var getQuestion = function () {
+    if (typeof globalJSON !== undefined && globalJSON.length > 0) {
+        var currentQuestion = globalJSON.shift();
+        createQuestionElements(currentQuestion);
+    } else {
+        showScore();
+    }
+}
+
+/*
+    loadJSON
+    --> Load local JSON file using GET request
+*/
 var createQuestionElements = function (currentQuestion) {
-
     counter += 1;
-
     var option,
         radio,
         label,
@@ -125,56 +145,9 @@ var createQuestionElements = function (currentQuestion) {
 }
 
 /*
-Download results of JSON
+    validateAnswer
+    --> Check which radio group button is checked
 */
-function clickDL() {
-    const date = new Date().toLocaleString();
-    var stringit = JSON.stringify(element);
-    let filename = date + ".json"
-    console.log(stringit);
-    console.log(filename);
-
-    var a = document.createElement("a");
-    var file = new Blob([stringit], { type: "text/plain" });
-    a.href = URL.createObjectURL(file);
-    a.download = filename;
-    a.click();
-}
-
-var checkAnswer = function (option, currentQuestion) {
-    if (option.lastElementChild.innerHTML === currentQuestion.choices[currentQuestion.correctAnswer]) {
-        questionsHit = questionsHit + 1;
-        whichquestion = whichquestion.concat(currentQuestion.question);
-        jester = {
-            q: currentQuestion.question,
-            selected: option.lastElementChild.innerHTML,
-            choices: currentQuestion.choices,
-            answer: currentQuestion.choices[currentQuestion.correctAnswer],
-            state: true,
-            answers: currentQuestion.wrongAnswers
-        };
-        element.push(jester);
-        // console.log(option.lastElementChild.innerHTML);
-        // console.log('hitt --> ', questionsHit * 20 + "%");
-    } else {
-        // console.log("FALSE");
-        // console.log(option.lastElementChild.innerHTML);
-        jester = {
-            q: currentQuestion.question,
-            selected: option.lastElementChild.innerHTML,
-            choices: currentQuestion.choices,
-            answer: currentQuestion.choices[currentQuestion.correctAnswer],
-            state: false,
-            answers: currentQuestion.wrongAnswers
-        };
-        element.push(jester);
-    }
-    // console.log(element);
-    questionsNumber = questionsNumber + 1;
-    quiz.innerHTML = '';
-    getQuestion();
-};
-
 var validateAnswer = function (currentQuestion) {
     console.log("clicked");
     var input = document.querySelectorAll('input');
@@ -187,17 +160,49 @@ var validateAnswer = function (currentQuestion) {
     }
     if (inputCounter > 0) {
         // document.querySelector('.question-alert').style.display = 'none';
-        // var option = document.querySelector('input:checked').parentNode;
-
+        var option = document.querySelector('input:checked').parentNode;
         checkAnswer(option, currentQuestion);
     } else {
         // document.querySelector('.question-alert').style.display = 'block';
     }
 };
 
+/*
+    checkAnswer
+    --> Check answer and save to global object
+*/
+var checkAnswer = function (option, currentQuestion) {
+    if (option.lastElementChild.innerHTML === currentQuestion.choices[currentQuestion.correctAnswer]) {
+        questionsHit = questionsHit + 1;
+        whichquestion = whichquestion.concat(currentQuestion.question);
+        jester = {
+            q: currentQuestion.question,
+            selected: option.lastElementChild.innerHTML,
+            choices: currentQuestion.choices,
+            answer: currentQuestion.choices[currentQuestion.correctAnswer],
+            state: true
+        };
+        element.push(jester);
+    } else {
+        jester = {
+            q: currentQuestion.question,
+            selected: option.lastElementChild.innerHTML,
+            choices: currentQuestion.choices,
+            answer: currentQuestion.choices[currentQuestion.correctAnswer],
+            state: false
+        };
+        element.push(jester);
+    }
+    questionsNumber = questionsNumber + 1;
+    quiz.innerHTML = '';
+    getQuestion();
+};
+
+
+
+
 var showScore = function () {
-    // console.log(element);
-    // console.log(percentage);
+
     var firstHeading = document.createElement('h1');
     firstHeading.innerHTML = '<font color="black">Results</font>';
 
@@ -207,22 +212,20 @@ var showScore = function () {
     quiz.appendChild(secondHeading);
     quiz.appendChild(firstHeading);
 
+    // Add each questions 
     for (var key in element) {
         var resultsDiv = document.createElement('p');
         console.log(element[key].q);
         resultsDiv.innerHTML = element[key].q;
         quiz.appendChild(resultsDiv);
-
+        // Colorize the true and false answers 
         for (var i = 0; i < element[key].choices.length; i++) {
             if (element[key].choices[i] == element[key].selected) {
-                console.log("SELECTED --> " + element[key].choices[i]);
-                if (element[key].selected == element[key].answer) {
-                    console.log("right");
+                if (element[key].selected == element[key].answer) { // right
                     var option = document.createElement('p');
                     option.innerHTML = '<font color="green">' + element[key].selected + '</font>';
                     resultsDiv.append(option);
-                } else if (element[key].selected != element[key].answer) {
-                    console.log("wrong");
+                } else if (element[key].selected != element[key].answer) { // wrong
                     var option = document.createElement('p');
                     option.innerHTML = '<font color="red">' + element[key].selected + '</font>';
                     resultsDiv.append(option);
@@ -230,31 +233,33 @@ var showScore = function () {
                     option2.innerHTML = '<font color="green">' + element[key].answer + '</font>';
                     resultsDiv.append(option2);
                 }
-
-                // }
-            } else {
-                // console.log("the rest --> " + element[key].choices[i]);
-                // var option = document.createElement('p');
-                // option.innerHTML = element[key].choices[i];
-                // resultsDiv.append(option);
             }
         }
     }
+
+    // Create the download button
     var downloadButton = document.createElement('div');
     downloadButton.innerHTML = '<button class="btn btn-link" onclick="clickDL()">Download Results (.JSON)</button>';
 
     quiz.appendChild(downloadButton);
 }
 
-var getQuestion = function () {
-    if (typeof globalJSON !== undefined && globalJSON.length > 0) {
-        var currentQuestion = globalJSON.shift();
-
-        createQuestionElements(currentQuestion);
-    } else {
-        showScore();
-    }
+/*
+    clickDL
+    --> Download results as JSON file
+*/
+function clickDL() {
+    const date = new Date().toLocaleString();
+    let stringit = JSON.stringify(element);
+    let filename = date + ".json"
+    let a = document.createElement("a");
+    let file = new Blob([stringit], { type: "text/plain" });
+    a.href = URL.createObjectURL(file);
+    a.download = filename;
+    a.click();
 }
+
+
 
 btnStart.addEventListener('click', function () {
     loadJSON("js/leg2.json");
