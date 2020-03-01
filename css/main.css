@@ -53,12 +53,25 @@ form {
   display: flex;
 }
 #quiz {
-  width: 100%;
+  width: 80%;
   margin: 0px auto;
   padding: 0em 0;
   background: #ffffff;
   box-shadow: -10px 0 #fffff;
 }
+
+.col-centered {
+  display:inline-block;
+  float:none;
+  /* reset the text-align */
+  text-align:left;
+  /* inline-block space fix */
+  margin-right:-4px;
+  text-align: center;
+  background-color: #ccc;
+  border: 1px solid #ddd;
+}
+
 @media (max-width: 667px) {
   #quiz {
     width: 95%;

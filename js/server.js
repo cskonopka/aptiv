@@ -1,17 +1,11 @@
-const express = require('express');
-const server = express();
-const port = 4000;
+var express = require('express'),
+  app = express(),
+  http = require('http'),
+  httpServer = http.Server(app);
 
-server.use(express.static('./'));
+app.use(express.static(__dirname + '/public'));
 
-server.get("/", (req, res) => {
-   res.sendFile(__dirname + '/index.html');
+app.get('/', function(req, res) {
+  res.sendfile(__dirname + '/index.html');
 });
-
-server.get("/json", (req, res) => {
-   res.json({ message: "Hello world" });
-});
-
-server.listen(port, () => {
-    console.log(`Server listening at ${port}`);
-});
+app.listen(3000);
