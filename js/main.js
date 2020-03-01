@@ -1,158 +1,24 @@
 // Problem: Create an Awesome Web App quiz using an object full of questions...
 // Solution: Add interactivity to our app using events...
 
-var quiz = document.getElementById('quiz');
-var btnStart = document.getElementById('start-quiz');
-var questionsHit = 0,
-    questionsNumber = 1;
-var questionsCorrect = [];
-var whichquestion = [];
-var whichwrong = [];
-
-
-var percentage;
-
-var element = [];
-// var element = [
-//     {
-//         "q": "What is the capital of Canada?",
-//         "selected": "Madrid",
-//         "choices": [
-//             "São Paulo",
-//             "Madrid",
-//             "Ottawa",
-//             "Cairo"
-//         ],
-//         "answer": "Ottawa",
-//         "state": false,
-//         "answers": [
-//             0,
-//             1,
-//             3
-//         ]
-//     },
-//     {
-//         "q": "What is the capital of Sweeden?",
-//         "selected": "Moscow",
-//         "choices": [
-//             "Tokyio",
-//             "Estocolmo",
-//             "Moscow",
-//             "Havana"
-//         ],
-//         "answer": "Estocolmo",
-//         "state": false,
-//         "answers": [
-//             0,
-//             2,
-//             3
-//         ]
-//     },
-//     {
-//         "q": "What is the capital of Germany?",
-//         "selected": "Berlim",
-//         "choices": [
-//             "Berlim",
-//             "Paris",
-//             "Lyon",
-//             "Montevidéu"
-//         ],
-//         "answer": "Berlim",
-//         "state": true,
-//         "answers": [
-//             1,
-//             2,
-//             3
-//         ]
-//     },
-//     {
-//         "q": "What is the capital of Argentina?",
-//         "selected": "Bueno Aires",
-//         "choices": [
-//             "Munique",
-//             "Kiev",
-//             "New York",
-//             "Bueno Aires"
-//         ],
-//         "answer": "Bueno Aires",
-//         "state": true,
-//         "answers": [
-//             0,
-//             1,
-//             2
-//         ]
-//     },
-//     {
-//         "q": "What is the capital of Norway?",
-//         "selected": "Sidney",
-//         "choices": [
-//             "Beijing",
-//             "Oslo",
-//             "Sidney",
-//             "Seattle"
-//         ],
-//         "answer": "Oslo",
-//         "state": false,
-//         "answers": [
-//             0,
-//             2,
-//             3
-//         ]
-//     }
-// ];
-
-
-
-// // Array of Questions...
-// var questions = [
-//     {
-//         question: 'What is the capital of Canada?',
-//         choices: [
-//             'São Paulo', 'Madrid', 'Ottawa', 'Cairo'
-//         ],
-//         correctAnswer: 2,
-//         wrongAnswers: [0, 1, 3]
-//     },
-//     {
-//         question: 'What is the capital of Sweeden?',
-//         choices: [
-//             'Tokyio', 'Estocolmo', 'Moscow', 'Havana'
-//         ],
-//         correctAnswer: 1,
-//         wrongAnswers: [0, 2, 3]
-//     },
-//     {
-//         question: 'What is the capital of Germany?',
-//         choices: [
-//             'Berlim', 'Paris', 'Lyon', 'Montevidéu'
-//         ],
-//         correctAnswer: 0,
-//         wrongAnswers: [1, 2, 3]
-//     },
-//     {
-//         question: 'What is the capital of Argentina?',
-//         choices: [
-//             'Munique', 'Kiev', 'New York', 'Bueno Aires'
-//         ],
-//         correctAnswer: 3,
-//         wrongAnswers: [0, 1, 2]
-//     }, {
-//         question: 'What is the capital of Norway?',
-//         choices: [
-//             'Beijing', 'Oslo', 'Sidney', 'Seattle'
-//         ],
-//         correctAnswer: 1,
-//         wrongAnswers: [0, 2, 3]
-//     },
-// ];
-
-var globalJSON = [];
+var quiz = document.getElementById('quiz'),
+    btnStart = document.getElementById('start-quiz'),
+    questionsHit = 0,
+    questionsNumber = 1,
+    counter = 0,
+    questionsCorrect = [],
+    whichquestion = [],
+    whichwrong = [],
+    globalJSON = [],
+    element = [],
+    jester = new Object,
+    percentage;
 
 init();
 
 function init() {
-    loadJSON(function(response) {
-        actual_JSON = JSON.parse(response);  
+    loadJSON(function (response) {
+        actual_JSON = JSON.parse(response);
         consumeData(actual_JSON); //call another function with the actual JSON
     });
 }
@@ -160,47 +26,24 @@ function init() {
 function consumeData(actualJson) {
     console.log(actualJson[0]);
     globalJSON = actualJson;
-    //write the rest of the code here
 }
 
-
-
-function loadJSON(callback) {   
+function loadJSON(callback) {
     var xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
     xobj.open('GET', 'js/leg10.json', true); // Replace 'my_data' with the path to your file
     xobj.onreadystatechange = function () {
-      if (xobj.readyState == 4 && xobj.status == "200") {
-        // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
-        callback(xobj.responseText);
-      }
-  };
-  xobj.send(null);  
-}
-
-function readJSON(path) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', path, true);
-    xhr.responseType = 'blob';
-    xhr.onload = function (e) {
-        if (this.status == 200) {
-            var file = new File([this.response], 'temp');
-            var fileReader = new FileReader();
-            fileReader.addEventListener('load', function () {
-                json = JSON.parse(fileReader.result);
-                console.log(json);
-                globalJSON.push(json);
-            });
-            fileReader.readAsText(file);
+        if (xobj.readyState == 4 && xobj.status == "200") {
+            // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+            callback(xobj.responseText);
         }
-    }
-    xhr.send();
+    };
+    xobj.send(null);
 }
 
-var counter = 0;
 // Creating question Structure...
 var createQuestionElements = function (currentQuestion) {
-    console.log(currentQuestion);
+
     counter += 1;
 
     var option,
@@ -208,7 +51,6 @@ var createQuestionElements = function (currentQuestion) {
         label,
         btn;
 
-        // console.log(gg);
     // BLOCK --> Info container
     var questionHolder = document.createElement('div');
 
@@ -221,7 +63,7 @@ var createQuestionElements = function (currentQuestion) {
     option3.classList.add('col-md-12');
     option3.classList.add('d-flex');
     option3.classList.add('justify-content-center');
-    option3.innerHTML = "<h1><font color='black'>Question " + questionsNumber + " of " + " 5 " + " - Score: " + questionsHit * 20 + "%"+"</font></h1>";
+    option3.innerHTML = "<h1><font color='black'>Question " + questionsNumber + " of " + " 5 " + " - Score: " + questionsHit * 20 + "%" + "</font></h1>";
 
     qH2.appendChild(option3);
     questionHolder.appendChild(qH2);
@@ -282,10 +124,6 @@ var createQuestionElements = function (currentQuestion) {
     quiz.appendChild(questionHolder);
 }
 
-var jester = new Object;
-// var element = [];
-
-
 /*
 Download results of JSON
 */
@@ -295,7 +133,6 @@ function clickDL() {
     let filename = date + ".json"
     console.log(stringit);
     console.log(filename);
-    // download(stringit, filename, "text/plain");
 
     var a = document.createElement("a");
     var file = new Blob([stringit], { type: "text/plain" });
@@ -304,17 +141,7 @@ function clickDL() {
     a.click();
 }
 
-function download(content, fileName, contentType) {
-    var a = document.createElement("a");
-    var file = new Blob([content], { type: contentType });
-    a.href = URL.createObjectURL(file);
-    a.download = fileName;
-    a.click();
-}
-
-
 var checkAnswer = function (option, currentQuestion) {
-    var cur;
     if (option.lastElementChild.innerHTML === currentQuestion.choices[currentQuestion.correctAnswer]) {
         questionsHit = questionsHit + 1;
         whichquestion = whichquestion.concat(currentQuestion.question);
@@ -327,12 +154,11 @@ var checkAnswer = function (option, currentQuestion) {
             answers: currentQuestion.wrongAnswers
         };
         element.push(jester);
-        console.log(option.lastElementChild.innerHTML);
-        console.log('hitt --> ', questionsHit * 20 + "%");
-        percentage = questionsHit * 20;
+        // console.log(option.lastElementChild.innerHTML);
+        // console.log('hitt --> ', questionsHit * 20 + "%");
     } else {
-        console.log("FALSE");
-        console.log(option.lastElementChild.innerHTML);
+        // console.log("FALSE");
+        // console.log(option.lastElementChild.innerHTML);
         jester = {
             q: currentQuestion.question,
             selected: option.lastElementChild.innerHTML,
@@ -343,7 +169,7 @@ var checkAnswer = function (option, currentQuestion) {
         };
         element.push(jester);
     }
-    console.log(element);
+    // console.log(element);
     questionsNumber = questionsNumber + 1;
     quiz.innerHTML = '';
     getQuestion();
@@ -352,7 +178,6 @@ var checkAnswer = function (option, currentQuestion) {
 var validateAnswer = function (currentQuestion) {
     console.log("clicked");
     var input = document.querySelectorAll('input');
-    // var input = document.querySelectorAll('.option input');
 
     var inputCounter = 0;
     for (var i = 0; i < input.length; i++) {
@@ -372,8 +197,8 @@ var validateAnswer = function (currentQuestion) {
 
 var showScore = function () {
     // console.log(globalJSON);
-    console.log("element ----> " + element);
-    // console.log(percentage);
+    console.log(element);
+    console.log(percentage);
     var firstHeading = document.createElement('h1');
     firstHeading.innerHTML = '<font color="black">Results</font>';
 
@@ -425,24 +250,19 @@ var showScore = function () {
 }
 
 var getQuestion = function () {
-    // console.log("questions ----> "+questions);
-    console.log("questions ----> "+globalJSON);
 
-    // if (typeof questions !== undefined && questions.length > 0) {
     if (typeof globalJSON !== undefined && globalJSON.length > 0) {
         var currentQuestion = globalJSON.shift();
 
         createQuestionElements(currentQuestion);
-        
     } else {
         showScore();
     }
 }
 
 btnStart.addEventListener('click', function () {
-    readJSON("js/leg2.json");
     console.log('asf');
-
+    loadJSON("js/leg2.json");
     quiz.innerHTML = '';
     getQuestion();
     // showScore();

@@ -9,54 +9,174 @@ var questionsCorrect = [];
 var whichquestion = [];
 var whichwrong = [];
 
+
+var percentage;
+
+var element = [];
+// var element = [
+//     {
+//         "q": "What is the capital of Canada?",
+//         "selected": "Madrid",
+//         "choices": [
+//             "São Paulo",
+//             "Madrid",
+//             "Ottawa",
+//             "Cairo"
+//         ],
+//         "answer": "Ottawa",
+//         "state": false,
+//         "answers": [
+//             0,
+//             1,
+//             3
+//         ]
+//     },
+//     {
+//         "q": "What is the capital of Sweeden?",
+//         "selected": "Moscow",
+//         "choices": [
+//             "Tokyio",
+//             "Estocolmo",
+//             "Moscow",
+//             "Havana"
+//         ],
+//         "answer": "Estocolmo",
+//         "state": false,
+//         "answers": [
+//             0,
+//             2,
+//             3
+//         ]
+//     },
+//     {
+//         "q": "What is the capital of Germany?",
+//         "selected": "Berlim",
+//         "choices": [
+//             "Berlim",
+//             "Paris",
+//             "Lyon",
+//             "Montevidéu"
+//         ],
+//         "answer": "Berlim",
+//         "state": true,
+//         "answers": [
+//             1,
+//             2,
+//             3
+//         ]
+//     },
+//     {
+//         "q": "What is the capital of Argentina?",
+//         "selected": "Bueno Aires",
+//         "choices": [
+//             "Munique",
+//             "Kiev",
+//             "New York",
+//             "Bueno Aires"
+//         ],
+//         "answer": "Bueno Aires",
+//         "state": true,
+//         "answers": [
+//             0,
+//             1,
+//             2
+//         ]
+//     },
+//     {
+//         "q": "What is the capital of Norway?",
+//         "selected": "Sidney",
+//         "choices": [
+//             "Beijing",
+//             "Oslo",
+//             "Sidney",
+//             "Seattle"
+//         ],
+//         "answer": "Oslo",
+//         "state": false,
+//         "answers": [
+//             0,
+//             2,
+//             3
+//         ]
+//     }
+// ];
+
+
+
+// // Array of Questions...
+// var questions = [
+//     {
+//         question: 'What is the capital of Canada?',
+//         choices: [
+//             'São Paulo', 'Madrid', 'Ottawa', 'Cairo'
+//         ],
+//         correctAnswer: 2,
+//         wrongAnswers: [0, 1, 3]
+//     },
+//     {
+//         question: 'What is the capital of Sweeden?',
+//         choices: [
+//             'Tokyio', 'Estocolmo', 'Moscow', 'Havana'
+//         ],
+//         correctAnswer: 1,
+//         wrongAnswers: [0, 2, 3]
+//     },
+//     {
+//         question: 'What is the capital of Germany?',
+//         choices: [
+//             'Berlim', 'Paris', 'Lyon', 'Montevidéu'
+//         ],
+//         correctAnswer: 0,
+//         wrongAnswers: [1, 2, 3]
+//     },
+//     {
+//         question: 'What is the capital of Argentina?',
+//         choices: [
+//             'Munique', 'Kiev', 'New York', 'Bueno Aires'
+//         ],
+//         correctAnswer: 3,
+//         wrongAnswers: [0, 1, 2]
+//     }, {
+//         question: 'What is the capital of Norway?',
+//         choices: [
+//             'Beijing', 'Oslo', 'Sidney', 'Seattle'
+//         ],
+//         correctAnswer: 1,
+//         wrongAnswers: [0, 2, 3]
+//     },
+// ];
+
 var globalJSON = [];
 
+init();
+
+function init() {
+    loadJSON(function(response) {
+        actual_JSON = JSON.parse(response);  
+        consumeData(actual_JSON); //call another function with the actual JSON
+    });
+}
+
+function consumeData(actualJson) {
+    console.log(actualJson[0]);
+    globalJSON = actualJson;
+    //write the rest of the code here
+}
 
 
 
-// Array of Questions...
-var questions = [
-    {
-        question: 'What is the capital of Canada?',
-        choices: [
-            'São Paulo', 'Madrid', 'Ottawa', 'Cairo'
-        ],
-        correctAnswer: 2,
-        wrongAnswers: [0, 1, 3]
-    },
-    {
-        question: 'What is the capital of Sweeden?',
-        choices: [
-            'Tokyio', 'Estocolmo', 'Moscow', 'Havana'
-        ],
-        correctAnswer: 1,
-        wrongAnswers: [0, 2, 3]
-    },
-    {
-        question: 'What is the capital of Germany?',
-        choices: [
-            'Berlim', 'Paris', 'Lyon', 'Montevidéu'
-        ],
-        correctAnswer: 0,
-        wrongAnswers: [1, 2, 3]
-    },
-    {
-        question: 'What is the capital of Argentina?',
-        choices: [
-            'Munique', 'Kiev', 'New York', 'Bueno Aires'
-        ],
-        correctAnswer: 3,
-        wrongAnswers: [0, 1, 2]
-    }, {
-        question: 'What is the capital of Norway?',
-        choices: [
-            'Beijing', 'Oslo', 'Sidney', 'Seattle'
-        ],
-        correctAnswer: 1,
-        wrongAnswers: [0, 2, 3]
-    },
-];
-
+function loadJSON(callback) {   
+    var xobj = new XMLHttpRequest();
+    xobj.overrideMimeType("application/json");
+    xobj.open('GET', 'js/leg10.json', true); // Replace 'my_data' with the path to your file
+    xobj.onreadystatechange = function () {
+      if (xobj.readyState == 4 && xobj.status == "200") {
+        // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+        callback(xobj.responseText);
+      }
+  };
+  xobj.send(null);  
+}
 
 function readJSON(path) {
     var xhr = new XMLHttpRequest();
@@ -80,118 +200,96 @@ function readJSON(path) {
 var counter = 0;
 // Creating question Structure...
 var createQuestionElements = function (currentQuestion) {
+    console.log(currentQuestion);
 
-
-    var jj = globalJSON;
-
+    counter += 1;
 
     var option,
         radio,
         label,
         btn;
 
+        // console.log(gg);
+    // BLOCK --> Info container
     var questionHolder = document.createElement('div');
-    var question = document.createElement('p');
-    var qcount = document.createElement('p');
-    // var qscore = document.createElement('p');
 
-    questionHolder.classList.add('question');
-    questionHolder.classList.add('qcount');
-    questionHolder.classList.add('qscore');
+    // BLOCK --> Score
+    qH2 = document.createElement('div');
+    qH2.classList.add("row");
+    qH2.classList.add("align-items-center");
 
-    qcount.innerHTML = currentQuestion.qcount;
-    questionHolder.appendChild(qcount);
+    option3 = document.createElement('div');
+    option3.classList.add('col-md-12');
+    option3.classList.add('d-flex');
+    option3.classList.add('justify-content-center');
+    option3.innerHTML = "<h1><font color='black'>Question " + questionsNumber + " of " + " 5 " + " - Score: " + questionsHit * 20 + "%"+"</font></h1>";
 
-    // console.log(globalJSON.legend[0].question);
+    qH2.appendChild(option3);
+    questionHolder.appendChild(qH2);
 
-    // console.log(globalJSON[0].question, counter);
+    // BLOCK --> Question
+    qQ2 = document.createElement('div');
+    qQ2.classList.add("row");
+    qQ2.classList.add("align-items-center");
 
-    // for (var i = 0; i < globalJSON.length; i++) {
-    //     console.log(globalJSON[i]);
-    // }
-    // qcount.innerHTML = "Question " + questionsNumber + " of 5" + " - " + "Score: " + questionsHit * 20 + "%";
-    qcount.innerHTML = '<div class="container-fluid"><div class="row align-items-center""><div class="col">' + "Question " + questionsNumber + " of " + " - " + "Score: " + questionsHit * 20 + "%" + '</div></div></div>';
-    question.innerHTML = '<div class="container-fluid"><div class="row align-items-center""><div class="col">' + currentQuestion.question + '</div></div></div>';
-    // question.innerHTML = currentQuestion.question;
-    questionHolder.appendChild(question);
+    option4 = document.createElement('div');
+    option4.classList.add('col-md-12');
+    option4.classList.add('d-flex');
+    option4.classList.add('justify-content-center');
+    option4.innerHTML = "<h3><font color='black'>" + currentQuestion.question + "</font></h3>";
 
-    counter += 1;
-    // diver = document.createElement('div');
-    // diver.innerHTML = '<div class="container-fluid"><div class="row align-items-center">';
+    qQ2.appendChild(option4);
+    questionHolder.appendChild(qQ2);
 
-
-    // for (var i2 = 0; i2 < 4; i2++) {
-    //     option = document.createElement('div');
-    //     option.innerHTML = '<div class="col-sm-3">' + currentQuestion.choices[i2] + '</div>';
-    //     console.log(currentQuestion.choices[i2])
-    // }
-    diverA = document.createElement('div');
-    diverA.classList.add("container-fluid");
-
+    // BLOCK --> Radio group
     diver2 = document.createElement('div');
     diver2.classList.add("row");
     diver2.classList.add("align-items-center");
-    // diver2.innerHTML = '</div></div>';
-    // questionHolder.appendChild(diver2);
 
     for (var i = 0; i < 4; i++) {
         option = document.createElement('div');
         option.classList.add('col-md-3');
         option.classList.add('d-flex');
         option.classList.add('justify-content-center');
-        // option.innerHTML = '<div class="col-sm-3">';
 
         radio = document.createElement('input');
         label = document.createElement('label');
         btn = document.createElement('a');
 
-
-
-
         radio.type = 'radio';
         radio.name = 'choice';
-
 
         option.appendChild(radio);
         option.appendChild(label);
 
         label.innerHTML = currentQuestion.choices[i];
-        // label.innerHTML = '<div class="container-fluid"><div class="row align-items-center"><div class="col-sm-3">' + currentQuestion.choices[i] + '</div></div></div>';;
         diver2.appendChild(option);
     }
-    diverA.appendChild(diver2);
-    questionHolder.appendChild(diverA);
-    tester = document.createElement('div');
+    questionHolder.appendChild(diver2);
 
-
-    questionHolder.appendChild(tester)
-
-
-    // var ender = document.createElement('div');
-    // ender.innerHTML = '</div></div>';
-    // questionHolder.appendChild(ender);
-
-    quiz.appendChild(questionHolder);
-
-    // btn.classList.add('btn');
-    // btn.classList.add('btn-small');
-    // btn.innerHTML = 'Submit';
-    btn.innerHTML = '<div class="container-fluid"><div class="row align-items-center""><div class="col"><button type="button"class="btn" >Submit</button></div></div></div>'
+    // BLOCK --> Submit Button
+    var btn = document.createElement("button")
+    btn.classList.add('btn');
+    btn.classList.add('btn-small');
+    btn.innerHTML = 'Submit';
 
     btn.addEventListener('click', function () {
         validateAnswer(currentQuestion);
     });
 
-    quiz.appendChild(btn);
+    questionHolder.appendChild(btn);
 
-
-
+    // BLOCK --> Adding to the page
+    quiz.appendChild(questionHolder);
 }
+
 var jester = new Object;
-var element = [];
+// var element = [];
 
 
-
+/*
+Download results of JSON
+*/
 function clickDL() {
     const date = new Date().toLocaleString();
     var stringit = JSON.stringify(element);
@@ -230,11 +328,12 @@ var checkAnswer = function (option, currentQuestion) {
             answers: currentQuestion.wrongAnswers
         };
         element.push(jester);
-        console.log(option.lastElementChild.innerHTML);
+        // console.log(option.lastElementChild.innerHTML);
         console.log('hitt --> ', questionsHit * 20 + "%");
+        percentage = questionsHit * 20;
     } else {
         console.log("FALSE");
-        console.log(option.lastElementChild.innerHTML);
+        // console.log(option.lastElementChild.innerHTML);
         jester = {
             q: currentQuestion.question,
             selected: option.lastElementChild.innerHTML,
@@ -245,27 +344,7 @@ var checkAnswer = function (option, currentQuestion) {
         };
         element.push(jester);
     }
-
-    console.log(element);
-
-    // var prog = document.createElement('div');
-
-    // questionHolder.classList.add('progress-bar');
-    // questionHolder.classList.add('qcount');
-    // questionHolder.classList.add('qscore');
-
-    // qscore.innerHTML = currentQuestion.qscore;
-    // questionHolder.appendChild(qscore);
-    // qscore.innerHTML="Score: " + questionsHit*20+"%";
-
-    // <div class="progress">
-    // <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
-    // </div>
-    // whichcorrect = questionsCorrect.concat(questionsHit);
-
-    // whichwrong = whichwrong.concat(currentQuestion.question);
-    // console.log("WRONG ----> " + whichwrong);
-
+    // console.log(element);
     questionsNumber = questionsNumber + 1;
     quiz.innerHTML = '';
     getQuestion();
@@ -293,125 +372,74 @@ var validateAnswer = function (currentQuestion) {
 };
 
 var showScore = function () {
-    console.log(element);
+    // console.log(globalJSON);
+    console.log("element ----> " + element);
+    // console.log(percentage);
+    var firstHeading = document.createElement('h1');
+    firstHeading.innerHTML = '<font color="black">Results</font>';
 
-    var firstHeading = document.createElement('h2');
-    firstHeading.innerHTML = 'Congratulations for finish the Quiz!!!';
+    var secondHeading = document.createElement('h2');
+    secondHeading.innerHTML = '<font color="black">Your score is ' + questionsHit + ' out of 5</font>';
 
-    var secondHeading = document.createElement('h3');
-    secondHeading.innerHTML = 'Your score is ' + questionsHit + ' out of ' + ((questionsNumber-1==NaN) ? '0' : questionsNumber-1) 
-
-    var downloadButton = document.createElement('button');
-    downloadButton.innerHTML = '<button class="btn" onclick="clickDL()">download results</button>';
-
-    quiz.appendChild(firstHeading);
     quiz.appendChild(secondHeading);
-    quiz.appendChild(downloadButton);
+    quiz.appendChild(firstHeading);
 
-    // var data = document.createElement('p');
-    // var i = 0;
-    // var text = ["text1", "tex2", "text3", "text4"];
     for (var key in element) {
-        var newdiv = document.createElement('div');
-        var collapse = "collapse" + key;
-
-        newdiv.innerHTML = '<div class="accordion" id="accordionExample">' + '<div class="card"><div class="card-header" id="headingOne">' +
-            '<h2 class="mb-0"><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#' + collapse + '" aria-expanded="false" aria-controls="' + collapse + '">' + element[key].q + '</button></h2></div>' +
-            '<div id="' + collapse + '" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample"><div class="card-body">'
-
-
-
-            /*
-        diverA = document.createElement('div');
-        diverA.classList.add("container-fluid");
-
-        diver2 = document.createElement('div');
-        diver2.classList.add("row");
-        diver2.classList.add("align-items-center");
-
+        var resultsDiv = document.createElement('p');
+        console.log(element[key].q);
+        resultsDiv.innerHTML = element[key].q;
+        quiz.appendChild(resultsDiv);
 
         for (var i = 0; i < element[key].choices.length; i++) {
+            if (element[key].choices[i] == element[key].selected) {
+                console.log("SELECTED --> " + element[key].choices[i]);
+                if (element[key].selected == element[key].answer) {
+                    console.log("right");
+                    var option = document.createElement('p');
+                    option.innerHTML = '<font color="green">' + element[key].selected + '</font>';
+                    resultsDiv.append(option);
+                } else if (element[key].selected != element[key].answer) {
+                    console.log("wrong");
+                    var option = document.createElement('p');
+                    option.innerHTML = '<font color="red">' + element[key].selected + '</font>';
+                    resultsDiv.append(option);
+                    var option2 = document.createElement('p');
+                    option2.innerHTML = '<font color="green">' + element[key].answer + '</font>';
+                    resultsDiv.append(option2);
+                }
 
-            option = document.createElement('div');
-            option.classList.add('col-md-3');
-
-            if (element[key].choices[i] == element[key].answer) {
-                option.innerHTML = element[key].choices[i];
-                console.log("CORRECT --> " + element[key].choices[i]);
+                // }
             } else {
-                option.innerHTML = element[key].choices[i];
-                console.log("WRONG --> " + element[key].choices[i]);
+                // console.log("the rest --> " + element[key].choices[i]);
+                // var option = document.createElement('p');
+                // option.innerHTML = element[key].choices[i];
+                // resultsDiv.append(option);
             }
-
-            // label.innerHTML = '<div class="container-fluid"><div class="row align-items-center"><div class="col-sm-3">' + currentQuestion.choices[i] + '</div></div></div>';;
-            diver2.appendChild(option);
         }
-        quiz.appendChild(newdiv);
-        var ender = document.createElement('div');
-        ender.innerHTM = '</div></div></div>';
-        quiz.appendChild(ender);
-    */
-
-       quiz.appendChild(newdiv);
-
-       var ender = document.createElement('div');
-       ender.innerHTML = '</div></div></div>';
-       quiz.appendChild(ender);
-
-        // data.innerHTML = element[key].q;
-        // var div = document.createElement("div");
-
-        // div.className = "finalBlock";
-
-        // div.innerHTML = element[key].q;
-        // quiz.appendChild(div);
-
-        // div.innerHTML = element[key].choice;
-        // div.innerHTML = element[key].answer;
     }
+    var downloadButton = document.createElement('div');
+    downloadButton.innerHTML = '<button class="btn btn-link" onclick="clickDL()">Download Results (.JSON)</button>';
+
+    quiz.appendChild(downloadButton);
 }
 
 var getQuestion = function () {
-    if (typeof questions !== undefined && questions.length > 0) {
-        var currentQuestion = questions.shift();
- 
+    // console.log("questions ----> "+questions);
+    console.log("questions ----> "+globalJSON);
+    // if (typeof questions !== undefined && questions.length > 0) {
+    if (typeof globalJSON !== undefined && globalJSON.length > 0) {
+        var currentQuestion = globalJSON.shift();
         createQuestionElements(currentQuestion);
     } else {
         showScore();
     }
 }
 
-
-// function ajax_get(url, callback) {
-//     var xmlhttp = new XMLHttpRequest();
-//     xmlhttp.onreadystatechange = function() {
-//         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-//             console.log('responseText:' + xmlhttp.responseText);
-//             try {
-//                 var data = JSON.parse(xmlhttp.responseText);
-//             } catch(err) {
-//                 console.log(err.message + " in " + xmlhttp.responseText);
-//                 return;
-//             }
-//             callback(data);
-//         }
-//     };
-
-//     xmlhttp.open("GET", url, true);
-//     xmlhttp.send();
-// }
-
-// ajax_get('legend.json', function(data) {
-//     document.getElementById("title").innerHTML = data["title"]; 
-//     var html = "<h2>" + data["question"] + "</h2>";
-//     html += "<h3>" + data["choices"] + "</h3>";
-//     document.getElementById("text").innerHTML = html;
-// });
-
-
 btnStart.addEventListener('click', function () {
-    console.log('asf');
     readJSON("js/leg2.json");
+    console.log('asf');
+
     quiz.innerHTML = '';
     getQuestion();
+    // showScore();
 });
