@@ -2,7 +2,7 @@ var quiz = document.getElementById('quiz'),
     btnStart = document.getElementById('start-quiz'),
     questionsHit = 0, // Tracking correct submissions
     questionsNumber = 1, // Tracking question number
-    counter = 0, 
+    counter = 0,
     globalJSON = [], // Local JSON file 
     element = [], // Appends internalDataPacket objects for score results
     internalDataPacket = new Object; // Object for collecting user submissions
@@ -27,7 +27,7 @@ function init() {
 function loadJSON(callback) {
     var xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
-    xobj.open('GET', 'json/questions.json', true); 
+    xobj.open('GET', 'json/questions.json', true);
     xobj.onreadystatechange = function () {
         if (xobj.readyState == 4 && xobj.status == "200") {
             callback(xobj.responseText);
@@ -63,6 +63,22 @@ var createQuestionElements = function (currentQuestion) {
     // BLOCK --> Info container
     var questionHolder = document.createElement('div');
 
+    var firstHeading = document.createElement('h1');
+    firstHeading.innerHTML = '<font color="black">Aptiv Quiz</font>';
+
+    qH3 = document.createElement('div');
+    qH3.classList.add("row");
+    qH3.classList.add("align-items-center");
+
+    option10 = document.createElement('div');
+    option10.classList.add('col-md-12');
+    option10.classList.add('d-flex');
+    option10.classList.add('justify-content-center');
+
+    option10.appendChild(firstHeading);
+    questionHolder.appendChild(option10);
+
+
     // BLOCK --> Score
     qH2 = document.createElement('div');
     qH2.classList.add("row");
@@ -72,10 +88,24 @@ var createQuestionElements = function (currentQuestion) {
     option3.classList.add('col-md-12');
     option3.classList.add('d-flex');
     option3.classList.add('justify-content-center');
-    option3.innerHTML = "<h1><font color='black'>Question " + questionsNumber + " of " + " 5 " + " - Score: " + questionsHit * 20 + "%" + "</font></h1>";
+    option3.innerHTML = "<h2><font color='black'>Question " + questionsNumber + " of " + " 5 </h2>";
 
     qH2.appendChild(option3);
     questionHolder.appendChild(qH2);
+
+    // BLOCK --> Score
+    qS2 = document.createElement('div');
+    qS2.classList.add("row");
+    qS2.classList.add("align-items-center");
+
+    option8 = document.createElement('div');
+    option8.classList.add('col-md-12');
+    option8.classList.add('d-flex');
+    option8.classList.add('justify-content-center');
+    option8.innerHTML = "<h3><font color='black'>Score: " + questionsHit * 20 + "%" + "</font></h3>";
+
+    qS2.appendChild(option8);
+    questionHolder.appendChild(qS2);
 
     // BLOCK --> Question
     qQ2 = document.createElement('div');
@@ -86,7 +116,7 @@ var createQuestionElements = function (currentQuestion) {
     option4.classList.add('col-md-12');
     option4.classList.add('d-flex');
     option4.classList.add('justify-content-center');
-    option4.innerHTML = "<h3><font color='black'>" + currentQuestion.question + "</font></h3>";
+    option4.innerHTML = "<h4><font color='black'>" + currentQuestion.question + "</font></h4>";
 
     qQ2.appendChild(option4);
     questionHolder.appendChild(qQ2);
@@ -215,7 +245,7 @@ var showScore = function () {
     quiz.appendChild(option4);
 
     var secondHeading = document.createElement('h2');
-    secondHeading.innerHTML = '<font color="black">Your score is ' + questionsHit + ' out of 5 - ' + questionsHit*20 +'%</font>';
+    secondHeading.innerHTML = '<font color="black">' + questionsHit + ' out of 5 questions are correct</font>';
 
     qH3 = document.createElement('div');
     qH3.classList.add("row");
@@ -228,6 +258,21 @@ var showScore = function () {
 
     option5.appendChild(secondHeading);
     quiz.appendChild(option5);
+
+    var thirdHeading = document.createElement('h3');
+    thirdHeading.innerHTML = '<font color="black">Score - ' + questionsHit * 20 + '%</font>';
+
+    qS3 = document.createElement('div');
+    qS3.classList.add("row");
+    qS3.classList.add("align-items-center");
+
+    option9 = document.createElement('div');
+    option9.classList.add('col-md-12');
+    option9.classList.add('d-flex');
+    option9.classList.add('justify-content-center');
+
+    option9.appendChild(thirdHeading);
+    quiz.appendChild(option9);
 
     // Add each questions 
     for (var key in element) {
