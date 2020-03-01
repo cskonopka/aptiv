@@ -55,7 +55,7 @@ form {
 #quiz {
   width: 100%;
   margin: 0px auto;
-  padding: 2em 0;
+  padding: 0em 0;
   background: #ffffff;
   box-shadow: -10px 0 #fffff;
 }
@@ -63,6 +63,10 @@ form {
   #quiz {
     width: 95%;
   }
+}
+
+.img-fluid{
+  width:58%;
 }
 .awesome-text {
   font-weight: 400;
@@ -81,6 +85,9 @@ form {
   margin-right: 0px;
   margin-left: 0px;
 }
+
+
+justify-content-center
 
 .btn btn-link {
   display: block;

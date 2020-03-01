@@ -129,16 +129,28 @@ var createQuestionElements = function (currentQuestion) {
     questionHolder.appendChild(diver2);
 
     // BLOCK --> Submit Button
+    qH2 = document.createElement('div');
+    qH2.classList.add("row");
+    qH2.classList.add("align-items-center");
+
+    option4 = document.createElement('div');
+    option4.classList.add('col-md-12');
+    option4.classList.add('d-flex');
+    option4.classList.add('justify-content-center');
+
     var btn = document.createElement("button")
     btn.classList.add('btn');
     btn.classList.add('btn-small');
     btn.innerHTML = 'Submit';
 
+    option4.appendChild(btn);
+    qH2.appendChild(option4);
+    questionHolder.appendChild(qH2);
+
     btn.addEventListener('click', function () {
         validateAnswer(currentQuestion);
     });
 
-    questionHolder.appendChild(btn);
 
     // BLOCK --> Adding to the page
     quiz.appendChild(questionHolder);
@@ -206,14 +218,39 @@ var showScore = function () {
     var firstHeading = document.createElement('h1');
     firstHeading.innerHTML = '<font color="black">Results</font>';
 
+    qH2 = document.createElement('div');
+    qH2.classList.add("row");
+    qH2.classList.add("align-items-center");
+
+    option4 = document.createElement('div');
+    option4.classList.add('col-md-12');
+    option4.classList.add('d-flex');
+    option4.classList.add('justify-content-center');
+
+    option4.appendChild(firstHeading);
+    quiz.appendChild(option4);
+
+    // 
     var secondHeading = document.createElement('h2');
     secondHeading.innerHTML = '<font color="black">Your score is ' + questionsHit + ' out of 5</font>';
 
-    quiz.appendChild(secondHeading);
-    quiz.appendChild(firstHeading);
+    qH3 = document.createElement('div');
+    qH3.classList.add("row");
+    qH3.classList.add("align-items-center");
+
+    option5 = document.createElement('div');
+    option5.classList.add('col-md-12');
+    option5.classList.add('d-flex');
+    option5.classList.add('justify-content-center');
+
+    option5.appendChild(secondHeading);
+    quiz.appendChild(option5);
 
     // Add each questions 
     for (var key in element) {
+        
+
+        
         var resultsDiv = document.createElement('p');
         console.log(element[key].q);
         resultsDiv.innerHTML = element[key].q;
