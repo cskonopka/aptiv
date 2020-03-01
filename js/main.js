@@ -186,26 +186,23 @@ var validateAnswer = function (currentQuestion) {
         }
     }
     if (inputCounter > 0) {
-        document.querySelector('.question-alert').style.display = 'none';
-        var option = document.querySelector('input:checked').parentNode;
+        // document.querySelector('.question-alert').style.display = 'none';
+        // var option = document.querySelector('input:checked').parentNode;
 
         checkAnswer(option, currentQuestion);
     } else {
-        document.querySelector('.question-alert').style.display = 'block';
+        // document.querySelector('.question-alert').style.display = 'block';
     }
 };
 
 var showScore = function () {
-    // console.log(globalJSON);
-    console.log(element);
-    console.log(percentage);
+    // console.log(element);
+    // console.log(percentage);
     var firstHeading = document.createElement('h1');
     firstHeading.innerHTML = '<font color="black">Results</font>';
 
     var secondHeading = document.createElement('h2');
     secondHeading.innerHTML = '<font color="black">Your score is ' + questionsHit + ' out of 5</font>';
-
-
 
     quiz.appendChild(secondHeading);
     quiz.appendChild(firstHeading);
@@ -250,7 +247,6 @@ var showScore = function () {
 }
 
 var getQuestion = function () {
-
     if (typeof globalJSON !== undefined && globalJSON.length > 0) {
         var currentQuestion = globalJSON.shift();
 
@@ -261,9 +257,7 @@ var getQuestion = function () {
 }
 
 btnStart.addEventListener('click', function () {
-    console.log('asf');
     loadJSON("js/leg2.json");
     quiz.innerHTML = '';
     getQuestion();
-    // showScore();
 });
