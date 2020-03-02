@@ -91,6 +91,9 @@ var createQuestionElements = function (currentQuestion) {
     questionLayout.appendChild(headerAptivRow);
 
     // BLOCK --> Number of questions correct header
+    var questionNumbers = document.createElement('h1');
+    questionNumbers.innerHTML = "<h2><font color='black'>Question " + questionsNumber + " of " + " 5 </h2>";
+
     currentQuestionNumberRow = document.createElement('div');
     currentQuestionNumberRow.classList.add("row");
     currentQuestionNumberRow.classList.add("align-items-center");
@@ -99,8 +102,8 @@ var createQuestionElements = function (currentQuestion) {
     currentQuestionNumberCol.classList.add('col-md-12');
     currentQuestionNumberCol.classList.add('d-flex');
     currentQuestionNumberCol.classList.add('justify-content-center');
-    currentQuestionNumberCol.innerHTML = "<h2><font color='black'>Question " + questionsNumber + " of " + " 5 </h2>";
 
+    currentQuestionNumberCol.appendChild(questionNumbers);
     currentQuestionNumberRow.appendChild(currentQuestionNumberCol);
     questionLayout.appendChild(currentQuestionNumberRow);
 
@@ -168,7 +171,7 @@ var createQuestionElements = function (currentQuestion) {
 
     var btn = document.createElement("button")
     btn.classList.add('btn');
-    btn.classList.add('btn-small');
+    btn.classList.add('btn-outline-dark');
     btn.innerHTML = 'Submit';
 
     buttonSubmitCol.appendChild(btn);
@@ -277,16 +280,16 @@ var showScore = function () {
 
     headerScoreRow = document.createElement('div');
     headerScoreRow.classList.add("row");
-    headerScoreRow.classList.add("align-items-center");
+    headerScoreRow.classList.add("justify-content-center");
 
     headerScoreCol = document.createElement('div');
     headerScoreCol.classList.add('col-md-12');
     headerScoreCol.classList.add('d-flex');
     headerScoreCol.classList.add('justify-content-center');
 
-    headerScoreRow.appendChild(thirdHeading);
-    headerScoreCol.appendChild(headerScoreRow);
-    quiz.appendChild(headerScoreCol);
+    headerScoreCol.appendChild(thirdHeading);
+    headerScoreRow.appendChild(headerScoreCol);
+    quiz.appendChild(headerScoreRow);
 
     // Add each questions 
     for (var key in element) {
@@ -363,11 +366,22 @@ var showScore = function () {
             }
         }
     }
-
-    // Create the download button, append to HTML
+    
     var downloadButton = document.createElement('div');
-    downloadButton.innerHTML = '<button class="btn btn-link" onclick="clickDL()">Download Results (.JSON)</button>';
-    quiz.appendChild(downloadButton);
+    downloadButton.innerHTML = '<button class="btn btn-outline-dark" onclick="clickDL()">Download Results (.JSON)</button>';
+
+    buttonDownloadRow = document.createElement('div');
+    buttonDownloadRow.classList.add("row");
+    buttonDownloadRow.classList.add("justify-content-center");
+
+    buttonDownloadCol = document.createElement('div');
+    buttonDownloadCol.classList.add('col-md-12');
+    buttonDownloadCol.classList.add('d-flex');
+    buttonDownloadCol.classList.add('justify-content-center');
+
+    buttonDownloadCol.appendChild(downloadButton);
+    buttonDownloadRow.appendChild(buttonDownloadCol);
+    quiz.appendChild(buttonDownloadRow);
 }
 
 /*
