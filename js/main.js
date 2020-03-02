@@ -1,3 +1,12 @@
+/*
+    Christopher Konopka
+    03/02/2020
+    Aptiv Quiz App
+*/
+
+/*
+    0: Globals
+*/
 var quiz = document.getElementById('quiz'),
     btnStart = document.getElementById('start-quiz'),
     questionsHit = 0, // Tracking correct submissions
@@ -9,7 +18,7 @@ var quiz = document.getElementById('quiz'),
 
 /*
     1: init
-    --> Initialization function
+    --> Initialization function for loading the JSON to memory via a global variable.
 */
 function init() {
     loadJSON(function (response) {
@@ -18,14 +27,14 @@ function init() {
     });
 }
 
-init(); // Initialize questions from local JSON file.
+init(); // Initialize JSON file.
 
 /*
     2: loadJSON
-    --> Load local JSON file using GET request
+    --> Load local JSON file into memory using a GET request.
 */
 function loadJSON(callback) {
-    var xobj = new XMLHttpRequest();
+    let xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
     xobj.open('GET', 'json/questions.json', true);
     xobj.onreadystatechange = function () {
@@ -38,32 +47,32 @@ function loadJSON(callback) {
 
 /*
     3: btnStart
-    --> Click Submit and get a new question
+    --> Listen for a click from the "start" button and get a new question.
 */
 btnStart.addEventListener('click', function () {
     quiz.innerHTML = '';
-    getQuestion();
+    getQ();
 });
 
 
 /*
-    4: getQuestion
-    --> Fetch the current question and generate question HTML.
+    4: getQ
+    --> Fetch the current question from the loaded JSON object and either generate another question or display the quiz results.
 */
-var getQuestion = function () {
+var getQ = function () {
     if (typeof globalJSON !== undefined && globalJSON.length > 0) {
         var currentQuestion = globalJSON.shift();
-        createQuestionElements(currentQuestion);
+        generateQuestionElements(currentQuestion);
     } else {
         displayScore();
     }
 }
 
 /*
-    5: createQuestionElements
-    --> Load local JSON file using GET request
+    5: generateQuestionElements
+    --> Generate question HTML elements using data from the loaded JSON object.
 */
-var createQuestionElements = function (currentQuestion) {
+var generateQuestionElements = function (currentQuestion) {
     counter += 1;
     var radio,
         label,
@@ -199,6 +208,7 @@ var createQuestionElements = function (currentQuestion) {
     buttonSubmitRow.appendChild(buttonSubmitCol);
     questionLayout.appendChild(buttonSubmitRow);
 
+    // BLOCK --> When submit is clicked, validate the answer.
     btn.addEventListener('click', function () {
         validateAnswer(currentQuestion);
     });
@@ -207,7 +217,7 @@ var createQuestionElements = function (currentQuestion) {
 
 /*
     6: validateAnswer
-    --> Check which radio group button is checked
+    --> Check which radio group button is checked and then check if the answer is correct via "answerCheck"
 */
 var validateAnswer = function (currentQuestion) {
     var input = document.querySelectorAll('input');
@@ -227,7 +237,7 @@ var validateAnswer = function (currentQuestion) {
 
 /*
     7: answerCheck
-    --> Check answer and save to global object
+    --> Check answer and save to a new global JSON object for the survey results.
 */
 var answerCheck = function (option, currentQuestion) {
     if (option.lastElementChild.innerHTML === currentQuestion.choices[currentQuestion.correctAnswer]) {
@@ -252,16 +262,15 @@ var answerCheck = function (option, currentQuestion) {
     }
     questionsNumber = questionsNumber + 1;
     quiz.innerHTML = '';
-    getQuestion(); // Restart the process
+    getQ(); // Restart the process
 };
 
 /*
     8: displayScore
-    --> Display results of the quiz
+    --> Display results of the quiz with a download .JSON button
 */
 var displayScore = function () {
-
-    // BLOCK --> Quiz results
+    // BLOCK --> Aptiv logo
     let imageAptiv = document.createElement('div');
     imageAptiv.innerHTML = '<img src="/assets/aptiv.png" class="img-fluid" alt="aptiv-logo">';
 
@@ -316,7 +325,7 @@ var displayScore = function () {
     headerScoreRow.appendChild(headerScoreCol);
     quiz.appendChild(headerScoreRow);
 
-    // Add each questions 
+    // BLOCK --> Display correct and incorrect results
     for (var key in element) {
         answerContainerRow = document.createElement('div');
         answerContainerRow.classList.add("row");
@@ -336,7 +345,7 @@ var displayScore = function () {
         answerContainerRow.appendChild(answerContainerCol);
         quiz.appendChild(answerContainerRow);
 
-        // Colorize the true and false answers 
+        // BLOCK --> Colorize the true and false answers 
         for (var i = 0; i < element[key].choices.length; i++) {
             if (element[key].choices[i] == element[key].selected) {
                 if (element[key].selected == element[key].answer) { // right
@@ -396,6 +405,7 @@ var displayScore = function () {
         }
     }
 
+    // BLOCK --> Download JSON button
     var downloadButton = document.createElement('div');
     downloadButton.innerHTML = '<button class="btn btn-outline-dark" onclick="clickDL()">Download Results (.JSON)</button>';
 
@@ -416,7 +426,7 @@ var displayScore = function () {
 
 /*
     9: clickDL
-    --> Download results as JSON file
+    --> Download local JSON object as JSON file
 */
 function clickDL() {
     const date = new Date().toLocaleString();
