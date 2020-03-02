@@ -6,12 +6,12 @@ This is an example quiz application built with Vanilla Javascript for Aptiv.
 
 # Requirements
 
-Primary
+*Primary*
 - The user should be presented with a series of multiple-choice questions, one at a time, and his/her progress (as percentage of questions answered) and score (as percentage answered correctly) should be visible at all times. [x]
 - When the test is complete, a summary view should be shown that includes a list of the incorrectly answered questions along with their true answers. [x]
 - The questions and answers for the test should be stored separately as a text file (CSV, TSV or similar) and easily edited without any code changes. The exact format of this file is up to you, as are the initial set of questions. [x]
 
-Bonus
+*Bonus*
 - Exportable data in the summary view (i.e. clicking a button downloads to the user’s machine a text file containing all the incorrect answer information). [x]
 
 # How to run?
