@@ -1,6 +1,6 @@
 [
     {
-        "question": "Who wrote “MUSIC”, the first widely used program for sound generation in 1957 while at Bell Labs??",
+        "question": "Who wrote “MUSIC”, the first widely used program for sound generation in 1957 while at Bell Labs?",
         "choices": [
             "John Chowning",
             "Jean-Claude Risset",
@@ -10,7 +10,7 @@
         "correctAnswer": 2
     },
     {
-        "question": "What NCAA collegiate football team have a football field dyed blue?",
+        "question": "What NCAA collegiate football team’s football field is dyed blue?",
         "choices": [
             "Florida Gulf Coast University",
             "Boise State University",
@@ -20,7 +20,7 @@
         "correctAnswer": 1
     },
     {
-        "question": "The printing press arrived in what Masschusetts town in the spring of 1639?",
+        "question": "The printing press arrived in what Masschusetts town during the spring of 1639?",
         "choices": [
             "Rowley",
             "Salem",
