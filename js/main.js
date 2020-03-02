@@ -65,17 +65,16 @@ var getQuestion = function () {
 */
 var createQuestionElements = function (currentQuestion) {
     counter += 1;
-    var option,
-        radio,
+    var radio,
         label,
         btn;
 
     // BLOCK --> Question Layout
-    var questionLayout = document.createElement('div');
+    let questionLayout = document.createElement('div');
 
-    // BLOCK --> Aptiv header
-    var headerAptiv = document.createElement('h1');
-    headerAptiv.innerHTML = '<font color="black">Aptiv Quiz</font>';
+    // BLOCK --> Aptiv image header
+    let imageAptiv = document.createElement('div');
+    imageAptiv.innerHTML = '<img src="/assets/aptiv.png" class="img-fluid" alt="aptiv-logo">';
 
     headerAptivRow = document.createElement('div');
     headerAptivRow.classList.add("row");
@@ -85,13 +84,14 @@ var createQuestionElements = function (currentQuestion) {
     headerAptivCol.classList.add('col-md-12');
     headerAptivCol.classList.add('d-flex');
     headerAptivCol.classList.add('justify-content-center');
+    headerAptivCol.classList.add('text-center');
 
-    headerAptivCol.appendChild(headerAptiv);
+    headerAptivCol.appendChild(imageAptiv);
     headerAptivRow.appendChild(headerAptivCol);
     questionLayout.appendChild(headerAptivRow);
 
     // BLOCK --> Number of questions correct header
-    var questionNumbers = document.createElement('h1');
+    let questionNumbers = document.createElement('h1');
     questionNumbers.innerHTML = "<h2><font color='black'>Question " + questionsNumber + " of " + " 5 </h2>";
 
     currentQuestionNumberRow = document.createElement('div');
@@ -102,6 +102,7 @@ var createQuestionElements = function (currentQuestion) {
     currentQuestionNumberCol.classList.add('col-md-12');
     currentQuestionNumberCol.classList.add('d-flex');
     currentQuestionNumberCol.classList.add('justify-content-center');
+    currentQuestionNumberCol.classList.add('text-center');
 
     currentQuestionNumberCol.appendChild(questionNumbers);
     currentQuestionNumberRow.appendChild(currentQuestionNumberCol);
@@ -116,6 +117,7 @@ var createQuestionElements = function (currentQuestion) {
     headerShowPercentCol.classList.add('col-md-12');
     headerShowPercentCol.classList.add('d-flex');
     headerShowPercentCol.classList.add('justify-content-center');
+    headerShowPercentCol.classList.add('text-center');
     headerShowPercentCol.innerHTML = "<h3><font color='black'>Score: " + questionsHit * 20 + "%" + "</font></h3>";
 
     headerShowPercentRow.appendChild(headerShowPercentCol);
@@ -130,6 +132,7 @@ var createQuestionElements = function (currentQuestion) {
     headerCurrentQuestionCol.classList.add('col-md-12');
     headerCurrentQuestionCol.classList.add('d-flex');
     headerCurrentQuestionCol.classList.add('justify-content-center');
+    headerCurrentQuestionCol.classList.add('text-center');
     headerCurrentQuestionCol.innerHTML = "<h4><font color='black'>" + currentQuestion.question + "</font></h4>";
 
     headerCurrentQuestionRow.appendChild(headerCurrentQuestionCol);
@@ -241,19 +244,20 @@ var checkAnswer = function (option, currentQuestion) {
 var showScore = function () {
 
     // BLOCK --> Quiz results
-    var firstHeading = document.createElement('h1');
-    firstHeading.innerHTML = '<font color="black">Aptiv Quiz Results</font>';
+    let imageAptiv = document.createElement('div');
+    imageAptiv.innerHTML = '<img src="/assets/aptiv.png" class="img-fluid" alt="aptiv-logo">';
 
     headerAptivRow = document.createElement('div');
     headerAptivRow.classList.add("row");
-    headerAptivRow.classList.add("justify-content-center");
+    headerAptivRow.classList.add("align-items-center");
 
     headerAptivCol = document.createElement('div');
     headerAptivCol.classList.add('col-md-12');
     headerAptivCol.classList.add('d-flex');
     headerAptivCol.classList.add('justify-content-center');
+    headerAptivCol.classList.add('text-center');
 
-    headerAptivCol.appendChild(firstHeading);
+    headerAptivCol.appendChild(imageAptiv);
     headerAptivRow.appendChild(headerAptivCol);
     quiz.appendChild(headerAptivRow);
 
@@ -266,9 +270,10 @@ var showScore = function () {
     headerQuestionsRow.classList.add("justify-content-center");
 
     headerQuestionsCol = document.createElement('div');
-    headerQuestionsCol.classList.add('col-md-12');
+    headerQuestionsCol.classList.add('col-md-auto');
     headerQuestionsCol.classList.add('d-flex');
     headerQuestionsCol.classList.add('justify-content-center');
+    headerQuestionsCol.classList.add('text-center');
 
     headerQuestionsCol.appendChild(secondHeading);
     headerQuestionsRow.appendChild(headerQuestionsCol);
@@ -283,9 +288,10 @@ var showScore = function () {
     headerScoreRow.classList.add("justify-content-center");
 
     headerScoreCol = document.createElement('div');
-    headerScoreCol.classList.add('col-md-12');
+    headerScoreCol.classList.add('col-md-auto');
     headerScoreCol.classList.add('d-flex');
     headerScoreCol.classList.add('justify-content-center');
+    headerScoreCol.classList.add('text-center');
 
     headerScoreCol.appendChild(thirdHeading);
     headerScoreRow.appendChild(headerScoreCol);
@@ -298,12 +304,12 @@ var showScore = function () {
         answerContainerRow.classList.add("justify-content-center");
 
         answerContainerCol = document.createElement('div');
-        answerContainerCol.classList.add('col-md-12');
+        answerContainerCol.classList.add('col-md-auto');
         answerContainerCol.classList.add('d-flex');
         answerContainerCol.classList.add('justify-content-center');
+        answerContainerCol.classList.add('text-center');
 
         var checkquestion = document.createElement('h4');
-        console.log(element[key].q);
         checkquestion.innerHTML = element[key].q;
 
         answerContainerCol.appendChild(checkquestion)
@@ -320,11 +326,11 @@ var showScore = function () {
                     answerCorrectSingleRow.classList.add("justify-content-center");
 
                     answerCorrectSingleCol = document.createElement('div');
-                    answerCorrectSingleCol.classList.add('col-md-12');
+                    answerCorrectSingleCol.classList.add('col-md-auto');
                     answerCorrectSingleCol.classList.add('d-flex');
                     answerCorrectSingleCol.classList.add('justify-content-center');
 
-                    var textGreenCorrect = document.createElement('h5');
+                    let textGreenCorrect = document.createElement('h5');
                     textGreenCorrect.classList.add('text-center');
                     textGreenCorrect.innerHTML = '<font color="green">' + element[key].selected + '</font>';
 
@@ -338,11 +344,11 @@ var showScore = function () {
                     answerDoubleRow.classList.add('justify-content-center');
 
                     textWrongCol = document.createElement('div');
-                    textWrongCol.classList.add('col-md-4');
+                    textWrongCol.classList.add('col-md-auto');
                     textWrongCol.classList.add('d-flex');
                     textWrongCol.classList.add('justify-content-center');
 
-                    var textWrong = document.createElement('h5');
+                    let textWrong = document.createElement('h5');
                     textWrong.classList.add('text-center');
                     textWrong.innerHTML = '<font color="red">' + element[key].selected + '</font>';
 
@@ -351,11 +357,11 @@ var showScore = function () {
                     quiz.appendChild(answerDoubleRow);
 
                     textRightCol = document.createElement('div');
-                    textRightCol.classList.add('col-md-4');
+                    textRightCol.classList.add('col-md-auto');
                     textRightCol.classList.add('d-flex');
                     textRightCol.classList.add('justify-content-center');
 
-                    var textRight = document.createElement('h5');
+                    let textRight = document.createElement('h5');
                     textRight.classList.add('text-center');
                     textRight.innerHTML = '<font color="green">' + element[key].answer + '</font>';
 
