@@ -142,10 +142,12 @@ var createQuestionElements = function (currentQuestion) {
     groupRadioRow = document.createElement('div');
     groupRadioRow.classList.add("row");
     groupRadioRow.classList.add("align-items-center");
+    groupRadioRow.classList.add('d-flex');
+    groupRadioRow.classList.add('justify-content-center');
 
     for (var i = 0; i < 4; i++) {
         groupRadioCol = document.createElement('div');
-        groupRadioCol.classList.add('col-md-3');
+        groupRadioCol.classList.add('col-md-auto');
         groupRadioCol.classList.add('d-flex');
         groupRadioCol.classList.add('justify-content-center');
 
@@ -372,7 +374,7 @@ var showScore = function () {
             }
         }
     }
-    
+
     var downloadButton = document.createElement('div');
     downloadButton.innerHTML = '<button class="btn btn-outline-dark" onclick="clickDL()">Download Results (.JSON)</button>';
 

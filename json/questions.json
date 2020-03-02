@@ -12,9 +12,9 @@
     {
         "question": "What NCAA collegiate football team have a football field dyed blue?",
         "choices": [
-            "Florida Gulf Coast",
-            "Boise",
-            "Kentucky",
+            "Florida Gulf Coast University",
+            "Boise State University",
+            "University of Kentucky",
             "The Ohio State"
         ],
         "correctAnswer": 1
@@ -33,7 +33,7 @@
         "question": "What company is the largest independent soft-drink bottler in the United States?",
         "choices": [
             "National Beverage Corp.",
-            "Pepsico",
+            "PepsiCo",
             "Jones Soda",
             "Polar Seltzer"
         ],
